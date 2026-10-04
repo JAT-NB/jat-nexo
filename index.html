@@ -79,6 +79,39 @@
       margin: 0;
     }
 
+input,
+select {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border: 1px solid #244866;
+  border-radius: 10px;
+  background: #071b33;
+  color: white;
+  font-size: 16px;
+}
+
+input::placeholder {
+  color: #8fa8bb;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #087da3;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0a91bb;
+}
+    
     footer {
       text-align: center;
       padding: 30px 10px;
@@ -113,7 +146,7 @@
 
     <section class="menu">
 
-      <div class="tarjeta">
+     <div class="tarjeta" onclick="abrirClientes()">
         <div class="icono">👤</div>
         <h3>Clientes</h3>
       </div>
@@ -135,11 +168,93 @@
 
     </section>
 
+<section id="pantallaClientes" style="display:none;">
+
+  <div class="bienvenida">
+    <h2>👤 Clientes</h2>
+    <p>Administrá tus clientes y lo que está buscando cada uno.</p>
+  </div>
+
+  <div class="bienvenida">
+
+    <h3>Nuevo cliente</h3>
+
+    <input
+      type="text"
+      id="clienteNombre"
+      placeholder="Nombre y apellido"
+    >
+
+    <input
+      type="tel"
+      id="clienteTelefono"
+      placeholder="Teléfono / WhatsApp"
+    >
+
+    <input
+      type="text"
+      id="clienteZona"
+      placeholder="Zona que busca"
+    >
+
+    <select id="clienteOperacion">
+      <option value="">Operación</option>
+      <option value="Compra">Compra</option>
+      <option value="Alquiler">Alquiler</option>
+    </select>
+
+    <input
+      type="number"
+      id="clientePresupuesto"
+      placeholder="Presupuesto máximo"
+    >
+
+    <input
+      type="number"
+      id="clienteAmbientes"
+      placeholder="Cantidad de ambientes"
+    >
+
+    <button type="button">
+      Guardar cliente
+    </button>
+
+    <button type="button" onclick="volverInicio()">
+      ← Volver
+    </button>
+
+  </div>
+
+</section>
+    
   </main>
 
   <footer>
     JAT Nexo
   </footer>
 
+<script>
+
+function abrirClientes() {
+
+  document.querySelector(".bienvenida").style.display = "none";
+  document.querySelector(".menu").style.display = "none";
+
+  document.getElementById("pantallaClientes").style.display = "block";
+
+}
+
+
+function volverInicio() {
+
+  document.getElementById("pantallaClientes").style.display = "none";
+
+  document.querySelector(".bienvenida").style.display = "block";
+  document.querySelector(".menu").style.display = "grid";
+
+}
+
+</script>
+  
 </body>
 </html>
