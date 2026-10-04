@@ -191,18 +191,24 @@ button:hover {
       placeholder="Teléfono / WhatsApp"
     >
 
-    <input
+   
+
+ <select id="clienteOperacion" onchange="cambiarTipoCliente()">
+  <option value="">¿Qué necesita el cliente?</option>
+  <option value="Busca comprar">🔎 Busca comprar</option>
+  <option value="Busca alquilar">🔎 Busca alquilar</option>
+  <option value="Quiere vender">🏠 Quiere vender</option>
+  <option value="Quiere alquilar propiedad">🔑 Quiere alquilar su propiedad</option>
+</select>
+
+<div id="datosBusqueda">
+
+ <input
       type="text"
       id="clienteZona"
       placeholder="Zona que busca"
     >
-
-    <select id="clienteOperacion">
-      <option value="">Operación</option>
-      <option value="Compra">Compra</option>
-      <option value="Alquiler">Alquiler</option>
-    </select>
-
+  
     <input
       type="number"
       id="clientePresupuesto"
@@ -215,6 +221,47 @@ button:hover {
       placeholder="Cantidad de ambientes"
     >
 
+</div>
+
+    <div id="datosPropiedad" style="display:none;">
+
+  <input
+    type="text"
+    id="propiedadDireccion"
+    placeholder="Dirección de la propiedad"
+  >
+
+  <input
+    type="text"
+    id="propiedadZona"
+    placeholder="Barrio / Zona"
+  >
+
+  <select id="propiedadTipo">
+    <option value="">Tipo de propiedad</option>
+    <option value="Departamento">Departamento</option>
+    <option value="Casa">Casa</option>
+    <option value="PH">PH</option>
+    <option value="Local">Local</option>
+    <option value="Oficina">Oficina</option>
+    <option value="Terreno">Terreno</option>
+    <option value="Otro">Otro</option>
+  </select>
+
+  <input
+    type="number"
+    id="propiedadAmbientes"
+    placeholder="Cantidad de ambientes"
+  >
+
+  <input
+    type="number"
+    id="propiedadPrecio"
+    placeholder="Precio pretendido"
+  >
+
+</div>
+  
     <button type="button">
       Guardar cliente
     </button>
@@ -252,6 +299,34 @@ function volverInicio() {
   document.querySelector(".bienvenida").style.display = "block";
   document.querySelector(".menu").style.display = "grid";
 
+function cambiarTipoCliente() {
+
+  const operacion =
+    document.getElementById("clienteOperacion").value;
+
+  const datosBusqueda =
+    document.getElementById("datosBusqueda");
+
+  const datosPropiedad =
+    document.getElementById("datosPropiedad");
+
+  if (
+    operacion === "Quiere vender" ||
+    operacion === "Quiere alquilar propiedad"
+  ) {
+
+    datosBusqueda.style.display = "none";
+    datosPropiedad.style.display = "block";
+
+  } else {
+
+    datosBusqueda.style.display = "block";
+    datosPropiedad.style.display = "none";
+
+  }
+
+}
+  
 }
 
 </script>
