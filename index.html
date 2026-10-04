@@ -203,11 +203,35 @@ button:hover {
 
 <div id="datosBusqueda">
 
+  <select id="clienteTipoPropiedad">
+    <option value="">Tipo de propiedad que busca</option>
+    <option value="Departamento">Departamento</option>
+    <option value="Casa">Casa</option>
+    <option value="PH">PH</option>
+    <option value="Local">Local</option>
+    <option value="Oficina">Oficina</option>
+    <option value="Terreno">Terreno</option>
+    <option value="Otro">Otro</option>
+  </select>
+
+  <input
+    type="text"
+    id="clienteZona"
+    placeholder="Barrios que busca (separar con +)"
+  >
+    
+<div id="datosBusqueda">
+
  <input
       type="text"
       id="clienteZona"
-      placeholder="Zona que busca"
+     placeholder="Barrios que busca (separar con +)"
     >
+
+<select id="clienteMoneda">
+  <option value="USD">USD - Dólares</option>
+  <option value="ARS">ARS - Pesos argentinos</option>
+</select>
   
     <input
       type="number"
@@ -254,6 +278,11 @@ button:hover {
     placeholder="Cantidad de ambientes"
   >
 
+<select id="propiedadMoneda">
+  <option value="USD">USD - Dólares</option>
+  <option value="ARS">ARS - Pesos argentinos</option>
+</select>
+      
   <input
     type="number"
     id="propiedadPrecio"
