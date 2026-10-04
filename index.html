@@ -468,7 +468,7 @@
         </div>
 
 
-        <button type="button">
+       <button type="button" id="btnGuardarCliente">
           Guardar cliente
         </button>
 
@@ -491,7 +491,31 @@
   </footer>
 
 
-  <script>
+ <script type="module">
+
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyChga286wDg0Ds9k1i0x0ImME21fCybTm4",
+  authDomain: "jat-nexo.firebaseapp.com",
+  projectId: "jat-nexo",
+  storageBucket: "jat-nexo.firebasestorage.app",
+  messagingSenderId: "123468270889",
+  appId: "1:123468270889:web:6a507a7d01e1bf23553b38"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
 
     function abrirClientes() {
 
@@ -566,6 +590,130 @@
 
     }
 
+document.getElementById("btnGuardarCliente").addEventListener("click", guardarCliente);
+
+async function guardarCliente() {
+
+  const nombre = document.getElementById("clienteNombre").value.trim();
+  const telefono = document.getElementById("clienteTelefono").value.trim();
+  const operacion = document.getElementById("clienteOperacion").value;
+
+  if (!nombre) {
+    alert("Ingresá el nombre y apellido del cliente.");
+    return;
+  }
+
+  if (!operacion) {
+    alert("Seleccioná qué necesita el cliente.");
+    return;
+  }
+
+  const cliente = {
+    nombre: nombre,
+    telefono: telefono,
+    operacion: operacion,
+    fechaCreacion: serverTimestamp()
+  };
+
+  if (
+    operacion === "Busca comprar" ||
+    operacion === "Busca alquilar"
+  ) {
+
+    const tiposSeleccionados = Array.from(
+      document.querySelectorAll(
+        'input[name="clienteTipoPropiedad"]:checked'
+      )
+    ).map(opcion => opcion.value);
+
+    const zona = document.getElementById("clienteZona").value.trim();
+    const moneda = document.getElementById("clienteMoneda").value;
+    const presupuesto = Number(
+      document.getElementById("clientePresupuesto").value
+    );
+    const ambientes = Number(
+      document.getElementById("clienteAmbientes").value
+    );
+
+    if (tiposSeleccionados.length === 0) {
+      alert("Seleccioná al menos un tipo de propiedad.");
+      return;
+    }
+
+    if (presupuesto < 0) {
+      alert("El presupuesto no puede ser negativo.");
+      return;
+    }
+
+    if (ambientes < 1) {
+      alert("La cantidad de ambientes debe ser 1 o más.");
+      return;
+    }
+
+    cliente.tiposPropiedad = tiposSeleccionados;
+    cliente.zona = zona;
+    cliente.moneda = moneda;
+    cliente.presupuestoMaximo = presupuesto;
+    cliente.ambientes = ambientes;
+
+  } else {
+
+    const direccion = document.getElementById("propiedadDireccion").value.trim();
+    const zona = document.getElementById("propiedadZona").value.trim();
+    const tipo = document.getElementById("propiedadTipo").value;
+    const moneda = document.getElementById("propiedadMoneda").value;
+
+    const ambientes = Number(
+      document.getElementById("propiedadAmbientes").value
+    );
+
+    const precio = Number(
+      document.getElementById("propiedadPrecio").value
+    );
+
+    if (ambientes < 1) {
+      alert("La cantidad de ambientes debe ser 1 o más.");
+      return;
+    }
+
+    if (precio < 0) {
+      alert("El precio no puede ser negativo.");
+      return;
+    }
+
+    cliente.propiedad = {
+      direccion: direccion,
+      zona: zona,
+      tipo: tipo,
+      ambientes: ambientes,
+      moneda: moneda,
+      precio: precio
+    };
+  }
+
+  try {
+
+    await addDoc(
+      collection(db, "clientes"),
+      cliente
+    );
+
+    alert("✅ Cliente guardado correctamente");
+
+  } catch (error) {
+
+    console.error("Error al guardar cliente:", error);
+
+    alert(
+      "❌ No se pudo guardar el cliente. Revisá la conexión con Firebase."
+    );
+  }
+}
+
+window.abrirClientes = abrirClientes;
+window.volverInicio = volverInicio;
+window.cambiarTipoCliente = cambiarTipoCliente;
+   
   </script>
 
 </body>
