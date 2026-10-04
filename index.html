@@ -79,39 +79,71 @@
       margin: 0;
     }
 
-input,
-select {
-  width: 100%;
-  padding: 14px;
-  margin: 8px 0;
-  border: 1px solid #244866;
-  border-radius: 10px;
-  background: #071b33;
-  color: white;
-  font-size: 16px;
-}
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border: 1px solid #244866;
+      border-radius: 10px;
+      background: #071b33;
+      color: white;
+      font-size: 16px;
+    }
 
-input::placeholder {
-  color: #8fa8bb;
-}
+    input::placeholder {
+      color: #8fa8bb;
+    }
 
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #087da3;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #087da3;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-button:hover {
-  background: #0a91bb;
-}
-    
+    button:hover {
+      background: #0a91bb;
+    }
+
+    /* TIPOS DE PROPIEDAD MÚLTIPLES */
+
+    .titulo-opciones {
+      margin-top: 14px;
+      margin-bottom: 8px;
+      color: #b9d7e8;
+      font-size: 14px;
+    }
+
+    .tipos-propiedad {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .opcion-tipo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #071b33;
+      border: 1px solid #244866;
+      border-radius: 10px;
+      padding: 11px;
+      cursor: pointer;
+    }
+
+    .opcion-tipo input {
+      width: auto;
+      margin: 0;
+    }
+
     footer {
       text-align: center;
       padding: 30px 10px;
@@ -122,6 +154,10 @@ button:hover {
     @media (max-width: 600px) {
       .menu {
         grid-template-columns: 1fr;
+      }
+
+      .tipos-propiedad {
+        grid-template-columns: 1fr 1fr;
       }
     }
   </style>
@@ -136,6 +172,8 @@ button:hover {
 
   <main>
 
+    <!-- INICIO -->
+
     <section class="bienvenida">
       <h2>Bienvenido 👋</h2>
       <p>
@@ -146,7 +184,7 @@ button:hover {
 
     <section class="menu">
 
-     <div class="tarjeta" onclick="abrirClientes()">
+      <div class="tarjeta" onclick="abrirClientes()">
         <div class="icono">👤</div>
         <h3>Clientes</h3>
       </div>
@@ -168,199 +206,368 @@ button:hover {
 
     </section>
 
-<section id="pantallaClientes" style="display:none;">
 
-  <div class="bienvenida">
-    <h2>👤 Clientes</h2>
-    <p>Administrá tus clientes y lo que está buscando cada uno.</p>
-  </div>
+    <!-- CLIENTES -->
 
-  <div class="bienvenida">
+    <section id="pantallaClientes" style="display:none;">
 
-    <h3>Nuevo cliente</h3>
+      <div class="bienvenida">
+        <h2>👤 Clientes</h2>
+        <p>Administrá tus clientes y lo que está buscando cada uno.</p>
+      </div>
 
-    <input
-      type="text"
-      id="clienteNombre"
-      placeholder="Nombre y apellido"
-    >
+      <div class="bienvenida">
 
-    <input
-      type="tel"
-      id="clienteTelefono"
-      placeholder="Teléfono / WhatsApp"
-    >
+        <h3>Nuevo cliente</h3>
 
-   
+        <input
+          type="text"
+          id="clienteNombre"
+          placeholder="Nombre y apellido"
+        >
 
- <select id="clienteOperacion" onchange="cambiarTipoCliente()">
- <option value="" selected disabled hidden>¿Qué necesita el cliente?</option>
-  <option value="Busca comprar">🔎 Busca comprar</option>
-  <option value="Busca alquilar">🔎 Busca alquilar</option>
-  <option value="Quiere vender">🏠 Quiere vender</option>
-  <option value="Quiere alquilar propiedad">🔑 Quiere alquilar su propiedad</option>
-</select>
+        <input
+          type="tel"
+          id="clienteTelefono"
+          placeholder="Teléfono / WhatsApp"
+        >
 
-<div id="datosBusqueda">
 
-  <select id="clienteTipoPropiedad">
-    <option value="">Tipo de propiedad que busca</option>
-    <option value="Departamento">Departamento</option>
-    <option value="Casa">Casa</option>
-    <option value="PH">PH</option>
-    <option value="Local">Local</option>
-    <option value="Oficina">Oficina</option>
-    <option value="Terreno">Terreno</option>
-    <option value="Otro">Otro</option>
-  </select>
+        <select
+          id="clienteOperacion"
+          onchange="cambiarTipoCliente()"
+        >
 
-  <input
-    type="text"
-    id="clienteZona"
-    placeholder="Barrios que busca (separar con +)"
-  >
-    
-<div id="datosBusqueda">
+          <option
+            value=""
+            selected
+            disabled
+            hidden
+          >
+            ¿Qué necesita el cliente?
+          </option>
 
- <input
-      type="text"
-      id="clienteZona"
-     placeholder="Barrios que busca (separar con +)"
-    >
+          <option value="Busca comprar">
+            🔎 Busca comprar
+          </option>
 
-<select id="clienteMoneda">
-  <option value="USD">USD - Dólares</option>
-  <option value="ARS">ARS - Pesos argentinos</option>
-</select>
-  
-   <input
-  type="number"
-  id="clientePresupuesto"
-  min="0"
-  placeholder="Presupuesto máximo"
->
+          <option value="Busca alquilar">
+            🔎 Busca alquilar
+          </option>
 
-    <input
-      type="number"
-      id="clienteAmbientes"
-      placeholder="Cantidad de ambientes"
-    >
+          <option value="Quiere vender">
+            🏠 Quiere vender
+          </option>
 
-</div>
+          <option value="Quiere alquilar propiedad">
+            🔑 Quiere alquilar su propiedad
+          </option>
 
-    <div id="datosPropiedad" style="display:none;">
+        </select>
 
-  <input
-    type="text"
-    id="propiedadDireccion"
-    placeholder="Dirección de la propiedad"
-  >
 
-  <input
-    type="text"
-    id="propiedadZona"
-    placeholder="Barrio / Zona"
-  >
+        <!-- DATOS DE BÚSQUEDA -->
 
-  <select id="propiedadTipo">
-    <option value="">Tipo de propiedad</option>
-    <option value="Departamento">Departamento</option>
-    <option value="Casa">Casa</option>
-    <option value="PH">PH</option>
-    <option value="Local">Local</option>
-    <option value="Oficina">Oficina</option>
-    <option value="Terreno">Terreno</option>
-    <option value="Otro">Otro</option>
-  </select>
+        <div id="datosBusqueda">
 
-  <input
-    type="number"
-    id="propiedadAmbientes"
-    placeholder="Cantidad de ambientes"
-  >
+          <div class="titulo-opciones">
+            Tipo de propiedad que busca
+          </div>
 
-<select id="propiedadMoneda">
-  <option value="USD">USD - Dólares</option>
-  <option value="ARS">ARS - Pesos argentinos</option>
-</select>
-      
-  <input
-    type="number"
-    id="propiedadPrecio"
-    min="0"
-    placeholder="Precio pretendido"
-  >
+          <div class="tipos-propiedad">
 
-</div>
-  
-    <button type="button">
-      Guardar cliente
-    </button>
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Departamento"
+              >
+              Departamento
+            </label>
 
-    <button type="button" onclick="volverInicio()">
-      ← Volver
-    </button>
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Casa"
+              >
+              Casa
+            </label>
 
-  </div>
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="PH"
+              >
+              PH
+            </label>
 
-</section>
-    
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Local"
+              >
+              Local
+            </label>
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Oficina"
+              >
+              Oficina
+            </label>
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Terreno"
+              >
+              Terreno
+            </label>
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Otro"
+              >
+              Otro
+            </label>
+
+          </div>
+
+
+          <input
+            type="text"
+            id="clienteZona"
+            placeholder="Barrios que busca (separar con +)"
+          >
+
+
+          <select id="clienteMoneda">
+
+            <option value="USD">
+              USD - Dólares
+            </option>
+
+            <option value="ARS">
+              ARS - Pesos argentinos
+            </option>
+
+          </select>
+
+
+          <input
+            type="number"
+            id="clientePresupuesto"
+            min="0"
+            placeholder="Presupuesto máximo"
+          >
+
+
+          <input
+            type="number"
+            id="clienteAmbientes"
+            min="1"
+            placeholder="Cantidad de ambientes"
+          >
+
+        </div>
+
+
+        <!-- DATOS DE PROPIEDAD -->
+
+        <div
+          id="datosPropiedad"
+          style="display:none;"
+        >
+
+          <input
+            type="text"
+            id="propiedadDireccion"
+            placeholder="Dirección de la propiedad"
+          >
+
+          <input
+            type="text"
+            id="propiedadZona"
+            placeholder="Barrio / Zona"
+          >
+
+
+          <select id="propiedadTipo">
+
+            <option value="">
+              Tipo de propiedad
+            </option>
+
+            <option value="Departamento">
+              Departamento
+            </option>
+
+            <option value="Casa">
+              Casa
+            </option>
+
+            <option value="PH">
+              PH
+            </option>
+
+            <option value="Local">
+              Local
+            </option>
+
+            <option value="Oficina">
+              Oficina
+            </option>
+
+            <option value="Terreno">
+              Terreno
+            </option>
+
+            <option value="Otro">
+              Otro
+            </option>
+
+          </select>
+
+
+          <input
+            type="number"
+            id="propiedadAmbientes"
+            min="1"
+            placeholder="Cantidad de ambientes"
+          >
+
+
+          <select id="propiedadMoneda">
+
+            <option value="USD">
+              USD - Dólares
+            </option>
+
+            <option value="ARS">
+              ARS - Pesos argentinos
+            </option>
+
+          </select>
+
+
+          <input
+            type="number"
+            id="propiedadPrecio"
+            min="0"
+            placeholder="Precio pretendido"
+          >
+
+        </div>
+
+
+        <button type="button">
+          Guardar cliente
+        </button>
+
+        <button
+          type="button"
+          onclick="volverInicio()"
+        >
+          ← Volver
+        </button>
+
+      </div>
+
+    </section>
+
   </main>
+
 
   <footer>
     JAT Nexo
   </footer>
 
-<script>
 
-function abrirClientes() {
+  <script>
 
-  document.querySelector(".bienvenida").style.display = "none";
-  document.querySelector(".menu").style.display = "none";
+    function abrirClientes() {
 
-  document.getElementById("pantallaClientes").style.display = "block";
+      document.querySelector(".bienvenida").style.display =
+        "none";
 
-}
+      document.querySelector(".menu").style.display =
+        "none";
+
+      document.getElementById(
+        "pantallaClientes"
+      ).style.display = "block";
+
+    }
 
 
-function volverInicio() {
+    function volverInicio() {
 
-  document.getElementById("pantallaClientes").style.display = "none";
+      document.getElementById(
+        "pantallaClientes"
+      ).style.display = "none";
 
-  document.querySelector(".bienvenida").style.display = "block";
-  document.querySelector(".menu").style.display = "grid";
+      document.querySelector(
+        ".bienvenida"
+      ).style.display = "block";
 
-function cambiarTipoCliente() {
+      document.querySelector(
+        ".menu"
+      ).style.display = "grid";
 
-  const operacion =
-    document.getElementById("clienteOperacion").value;
+    }
 
-  const datosBusqueda =
-    document.getElementById("datosBusqueda");
 
-  const datosPropiedad =
-    document.getElementById("datosPropiedad");
+    function cambiarTipoCliente() {
 
-  if (
-    operacion === "Quiere vender" ||
-    operacion === "Quiere alquilar propiedad"
-  ) {
+      const operacion =
+        document.getElementById(
+          "clienteOperacion"
+        ).value;
 
-    datosBusqueda.style.display = "none";
-    datosPropiedad.style.display = "block";
+      const datosBusqueda =
+        document.getElementById(
+          "datosBusqueda"
+        );
 
-  } else {
+      const datosPropiedad =
+        document.getElementById(
+          "datosPropiedad"
+        );
 
-    datosBusqueda.style.display = "block";
-    datosPropiedad.style.display = "none";
 
-  }
+      if (
+        operacion === "Quiere vender" ||
+        operacion === "Quiere alquilar propiedad"
+      ) {
 
-}
-  
-}
+        datosBusqueda.style.display =
+          "none";
 
-</script>
-  
+        datosPropiedad.style.display =
+          "block";
+
+      } else {
+
+        datosBusqueda.style.display =
+          "block";
+
+        datosPropiedad.style.display =
+          "none";
+
+      }
+
+    }
+
+  </script>
+
 </body>
+
 </html>
