@@ -1,10 +1,12 @@
 # JAT Nexo
 
-Asistente inmobiliario para agentes. V1.2 web compatible con GitHub Pages, sin npm ni instalación de dependencias. Conserva el proyecto Firebase `jat-nexo`, Firestore y Firebase modular por CDN.
+Asistente inmobiliario para agentes. V1.2.1 web compatible con GitHub Pages, sin npm ni instalación de dependencias. Conserva el proyecto Firebase `jat-nexo`, Firestore y Firebase modular por CDN.
 
-## Interfaz V1.2
+## Interfaz V1.2.1
 
-Dashboard compacto con métricas reales, últimos clientes, próximos seguimientos y resumen de propiedades. Menú lateral azul marino, navegación inferior móvil, paleta verde, arena y lavanda e iconos SVG sin dependencias instalables. Fichas inmobiliarias sin imágenes ficticias y coincidencias con criterios explícitos. Se conserva el algoritmo certificado de V1.1.
+Rediseño visual basado en el mockup: menú lateral azul marino, encabezado con acceso al buscador de Clientes, hero inmobiliario con los cuatro accesos existentes, métricas compactas, cartera de propiedades y agenda comercial. Clientes recientes y relación Cliente ↔ Propiedad utilizan únicamente los datos existentes. En móvil, la agenda tiene prioridad y las propiedades se presentan en tarjetas horizontales con navegación inferior.
+
+El hero utiliza una imagen ambiental generada y rotulada como ilustrativa; no representa una propiedad real. Las fichas sin fotos muestran “Sin fotografía”, sin inventar superficie, horas, porcentajes ni datos. No se modificaron funciones de negocio, formularios, validaciones, Firestore ni las cuatro mejoras UX certificadas de V1.2. La aprobación visual final corresponde al usuario tras revisar la versión publicada.
 
 Clientes abre directamente el buscador y el listado. El nombre o **Ver ficha** abre una consulta de solo lectura; **Editar cliente** abre el formulario. La operación se elige una sola vez entre **Comprar**, **Alquilar**, **Vender** y **Poner en alquiler**, conservando los valores existentes en Firestore.
 
@@ -28,7 +30,10 @@ Colecciones: `clientes` (compatible con registros anteriores), `propiedades` y `
 
 ## Archivos
 
-- `index.html`: V1.2 con HTML, CSS y JavaScript.
+- `index.html`: V1.2.1 con HTML, CSS y JavaScript.
+- `assets/hero-interior.png`: imagen ambiental decorativa del hero.
+- `index-backup-v1.2-certified.html`: backup exacto e inmutable de la V1.2 certificada.
+- `QA-V1.2.1.md`: resultados del rediseño visual, E2E/UAT y conservación de datos.
 - `index-backup-v1.1-certified.html`: backup exacto e inmutable de la V1.1 certificada.
 - `index-backup-v1.html`: copia exacta de la versión anterior a V1, conservada.
 - `index-backup-v1-functional.html`: copia exacta de la V1 funcional antes del rediseño.
@@ -37,6 +42,8 @@ Colecciones: `clientes` (compatible con registros anteriores), `propiedades` y `
 - `QA-V1.2.md`: evidencia de la repetición E2E/UAT y revisión de las cuatro mejoras UX.
 
 ## Verificación
+
+La validación de V1.2.1 se documenta en [QA-V1.2.1.md](QA-V1.2.1.md).
 
 V1.2: **17 E2E PASS + 22 UAT PASS = 39 PASS / 0 FAIL**, sobre la aplicación publicada, con Firestore real, escritorio y circuito móvil 390 × 844. Las cuatro mejoras UX y la limpieza se documentan en [QA-V1.2.md](QA-V1.2.md).
 
