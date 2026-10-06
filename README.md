@@ -1,6 +1,10 @@
 # JAT Nexo
 
-Asistente inmobiliario para agentes. V1 web compatible con GitHub Pages, sin npm ni instalación de dependencias. Conserva el proyecto Firebase `jat-nexo`, Firestore y Firebase modular por CDN.
+Asistente inmobiliario para agentes. V1.1 web compatible con GitHub Pages, sin npm ni instalación de dependencias. Conserva el proyecto Firebase `jat-nexo`, Firestore y Firebase modular por CDN.
+
+## Interfaz V1.1
+
+Dashboard con métricas reales, últimos clientes, próximos seguimientos y resumen de propiedades. Menú lateral en escritorio y navegación inferior en móvil. Tarjetas responsive e iconografía SVG sin dependencias instalables. La lógica funcional de V1 y el algoritmo de coincidencias se conservan.
 
 ## Uso
 
@@ -20,9 +24,13 @@ Colecciones: `clientes` (compatible con registros anteriores), `propiedades` y `
 
 ## Archivos
 
-- `index.html`: V1 completa con HTML, CSS y JavaScript.
-- `index-backup-v1.html`: copia exacta de la versión anterior a V1.
+- `index.html`: V1.1 completa con HTML, CSS y JavaScript.
+- `index-backup-v1.html`: copia exacta de la versión anterior a V1, conservada.
+- `index-backup-v1-functional.html`: copia exacta de la V1 funcional antes del rediseño.
+- `QA-V1.1.md`: informe del E2E y pruebas responsive.
 
 ## Verificación
 
-Sintaxis JavaScript comprobada con `node --check`. Pruebas con Firestore y DOM simulados para navegación, clientes, bloqueo de doble clic, limpieza, reintentos, vínculos, seguimientos, borrados, criterios de coincidencia, escape de HTML y URL de WhatsApp. Los archivos Firebase del CDN respondieron HTTP 200. No se escribieron datos de prueba en Firestore real. La prueba de integración real depende de los permisos/configuración del proyecto Firebase; no se realizó prueba visual con navegador local.
+V1.1 publicada probada en Chrome con Firestore real: **17 PASS / 0 FAIL** en el flujo E2E de V1. Se verificaron escritorio y vista responsive de 320, 390 y 760 px, sin overflow horizontal. Los cuatro registros QA fueron eliminados al terminar. Detalles, resultados esperados/obtenidos y limitaciones en [QA-V1.1.md](QA-V1.1.md).
+
+Ambos scripts pasaron `node --check`. Nueve funciones centrales se compararon byte a byte con la V1 funcional. Pruebas adicionales con DOM/Firestore simulados comprobaron criterios de coincidencia, reintentos, doble guardado, vínculos, borrados, escape HTML y URL de WhatsApp.
