@@ -1,758 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>JAT Nexo</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #071b33;
-      color: white;
-    }
-
-    header {
-      background: linear-gradient(135deg, #09284d, #075f82);
-      padding: 25px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 32px;
-    }
-
-    header p {
-      margin: 8px 0 0;
-      color: #b9d7e8;
-    }
-
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 25px 15px;
-    }
-
-    .bienvenida {
-      background: #0d2948;
-      border-radius: 16px;
-      padding: 25px;
-      margin-bottom: 20px;
-    }
-
-    .bienvenida h2 {
-      margin-top: 0;
-    }
-
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    .tarjeta {
-      background: #0d2948;
-      border-radius: 16px;
-      padding: 25px 15px;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .tarjeta:hover {
-      background: #123a61;
-    }
-
-    .icono {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-
-    .tarjeta h3 {
-      margin: 0;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 14px;
-      margin: 8px 0;
-      border: 1px solid #244866;
-      border-radius: 10px;
-      background: #071b33;
-      color: white;
-      font-size: 16px;
-    }
-
-    input::placeholder {
-      color: #8fa8bb;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 10px;
-      background: #087da3;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #0a91bb;
-    }
-
-    /* TIPOS DE PROPIEDAD MÚLTIPLES */
-
-    .titulo-opciones {
-      margin-top: 14px;
-      margin-bottom: 8px;
-      color: #b9d7e8;
-      font-size: 14px;
-    }
-
-    .tipos-propiedad {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .opcion-tipo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #071b33;
-      border: 1px solid #244866;
-      border-radius: 10px;
-      padding: 11px;
-      cursor: pointer;
-    }
-
-    .opcion-tipo input {
-      width: auto;
-      margin: 0;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 10px;
-      color: #7794ad;
-      font-size: 13px;
-    }
-
-    @media (max-width: 600px) {
-      .menu {
-        grid-template-columns: 1fr;
-      }
-
-      .tipos-propiedad {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAT Nexo</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#071b33;color:white}header{background:linear-gradient(135deg,#09284d,#075f82);padding:25px 20px;text-align:center}header h1{margin:0;font-size:32px}header p{margin:8px 0 0;color:#b9d7e8}main{max-width:900px;margin:auto;padding:25px 15px}.bienvenida,.registro{background:#0d2948;border-radius:16px;padding:25px;margin-bottom:20px}.bienvenida h2{margin-top:0}.menu,.fila{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.tarjeta{background:#0d2948;border-radius:16px;padding:25px 15px;text-align:center;cursor:pointer}.tarjeta:hover{background:#123a61}.icono{font-size:36px;margin-bottom:10px}.tarjeta strong{display:block;font-size:18px}input,select,textarea{width:100%;padding:14px;margin:8px 0;border:1px solid #244866;border-radius:10px;background:#071b33;color:white;font-size:16px}input::placeholder{color:#8fa8bb}button,.boton{display:inline-block;width:100%;padding:14px;margin-top:12px;border:none;border-radius:10px;background:#087da3;color:white;font-size:16px;font-weight:bold;cursor:pointer;text-decoration:none;text-align:center}button:hover,.boton:hover{background:#0a91bb}button:disabled{opacity:.5;cursor:wait}.secundario{background:#244866}.peligro{background:#8f3546}.acciones{display:flex;flex-wrap:wrap;gap:8px}.acciones button,.acciones .boton{width:auto;flex:1;margin-top:8px}.titulo-opciones,label{color:#b9d7e8;font-size:14px}.tipos-propiedad{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:8px 0 14px}.opcion-tipo{display:flex;align-items:center;gap:8px;background:#071b33;border:1px solid #244866;border-radius:10px;padding:11px;cursor:pointer}.opcion-tipo input{width:auto;margin:0}footer{text-align:center;padding:30px 10px;color:#7794ad;font-size:13px}.muted{color:#b9d7e8;font-size:14px;line-height:1.6}.registro h3{margin:0 0 12px}.registro p{overflow-wrap:anywhere;line-height:1.6}.etiqueta{display:inline-block;padding:5px 9px;border-radius:8px;background:#244866;font-size:13px}.aviso{padding:14px;border-radius:10px;margin-bottom:15px;background:#123a61;overflow-wrap:anywhere}.error{background:#642d3b}.exito{background:#155747}[hidden]{display:none!important}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #8ed8f0;outline-offset:3px}@media(max-width:600px){.menu,.fila{grid-template-columns:1fr}.tipos-propiedad{grid-template-columns:1fr 1fr}.acciones button{flex-basis:40%}.bienvenida,.registro{padding:20px}}
+</style>
 </head>
-
 <body>
-
-  <header>
-    <h1>JAT Nexo</h1>
-    <p>Tu asistente inmobiliario</p>
-  </header>
-
-  <main>
-
-    <!-- INICIO -->
-
-    <section class="bienvenida">
-      <h2>Bienvenido 👋</h2>
-      <p>
-        Organizá tus clientes, propiedades y oportunidades
-        desde un solo lugar.
-      </p>
-    </section>
-
-    <section class="menu">
-
-      <div class="tarjeta" onclick="abrirClientes()">
-        <div class="icono">👤</div>
-        <h3>Clientes</h3>
-      </div>
-
-      <div class="tarjeta">
-        <div class="icono">🏠</div>
-        <h3>Propiedades</h3>
-      </div>
-
-      <div class="tarjeta">
-        <div class="icono">🎯</div>
-        <h3>Coincidencias</h3>
-      </div>
-
-      <div class="tarjeta">
-        <div class="icono">📲</div>
-        <h3>Seguimientos</h3>
-      </div>
-
-    </section>
-
-
-    <!-- CLIENTES -->
-
-<section id="menuClientes" style="display:none;">
-
-  <div class="bienvenida">
-    <h2>👤 Clientes</h2>
-    <p>Administrá tus clientes y oportunidades.</p>
-  </div>
-
-  <div class="menu">
-
-    <div class="tarjeta" onclick="nuevoCliente()">
-      <div class="icono">➕</div>
-      <h3>Nuevo cliente</h3>
-    </div>
-
-    <div class="tarjeta" onclick="verClientesGuardados()">
-      <div class="icono">📋</div>
-      <h3>Clientes guardados</h3>
-    </div>
-
-  </div>
-
-  <button type="button" onclick="volverInicio()">
-    ← Volver
-  </button>
-
-</section>
-    
-    <section id="pantallaClientes" style="display:none;">
-
-      <div class="bienvenida">
-        <h2>👤 Clientes</h2>
-        <p>Administrá tus clientes y lo que está buscando cada uno.</p>
-      </div>
-
-      <div class="bienvenida">
-
-        <h3>Nuevo cliente</h3>
-
-        <input
-          type="text"
-          id="clienteNombre"
-          placeholder="Nombre y apellido"
-        >
-
-        <input
-          type="tel"
-          id="clienteTelefono"
-          placeholder="Teléfono / WhatsApp"
-        >
-
-
-        <select
-          id="clienteOperacion"
-          onchange="cambiarTipoCliente()"
-        >
-
-          <option
-            value=""
-            selected
-            disabled
-            hidden
-          >
-            ¿Qué necesita el cliente?
-          </option>
-
-          <option value="Busca comprar">
-            🔎 Busca comprar
-          </option>
-
-          <option value="Busca alquilar">
-            🔎 Busca alquilar
-          </option>
-
-          <option value="Quiere vender">
-            🏠 Quiere vender
-          </option>
-
-          <option value="Quiere alquilar propiedad">
-            🔑 Quiere alquilar su propiedad
-          </option>
-
-        </select>
-
-
-        <!-- DATOS DE BÚSQUEDA -->
-
-        <div id="datosBusqueda">
-
-          <div class="titulo-opciones">
-            Tipo de propiedad que busca
-          </div>
-
-          <div class="tipos-propiedad">
-
-            <label class="opcion-tipo">
-              <input
-                type="checkbox"
-                name="clienteTipoPropiedad"
-                value="Departamento"
-              >
-              Departamento
-            </label>
-
-            <label class="opcion-tipo">
-              <input
-                type="checkbox"
-                name="clienteTipoPropiedad"
-                value="Casa"
-              >
-              Casa
-            </label>
-
-            <label class="opcion-tipo">
-              <input
-                type="checkbox"
-                name="clienteTipoPropiedad"
-                value="PH"
-              >
-              PH
-            </label>
-
-            <label class="opcion-tipo">
-              <input
-                type="checkbox"
-                name="clienteTipoPropiedad"
-                value="Local"
-              >
-              Local
-            </label>
-
-            <label class="opcion-tipo">
-              <input
-                type="checkbox"
-                name="clienteTipoPropiedad"
-                value="Oficina"
-              >
-              Oficina
-            </label>
-
-            <label class="opcion-tipo">
-              <input
-                type="checkbox"
-                name="clienteTipoPropiedad"
-                value="Terreno"
-              >
-              Terreno
-            </label>
-
-            <label class="opcion-tipo">
-              <input
-                type="checkbox"
-                name="clienteTipoPropiedad"
-                value="Otro"
-              >
-              Otro
-            </label>
-
-          </div>
-
-
-          <input
-            type="text"
-            id="clienteZona"
-            placeholder="Barrios que busca (separar con +)"
-          >
-
-
-          <select id="clienteMoneda">
-
-            <option value="USD">
-              USD - Dólares
-            </option>
-
-            <option value="ARS">
-              ARS - Pesos argentinos
-            </option>
-
-          </select>
-
-
-          <input
-            type="number"
-            id="clientePresupuesto"
-            min="0"
-            placeholder="Presupuesto máximo"
-          >
-
-
-          <input
-            type="number"
-            id="clienteAmbientes"
-            min="1"
-            placeholder="Cantidad de ambientes"
-          >
-
-        </div>
-
-
-        <!-- DATOS DE PROPIEDAD -->
-
-        <div
-          id="datosPropiedad"
-          style="display:none;"
-        >
-
-          <input
-            type="text"
-            id="propiedadDireccion"
-            placeholder="Dirección de la propiedad"
-          >
-
-          <input
-            type="text"
-            id="propiedadZona"
-            placeholder="Barrio / Zona"
-          >
-
-
-          <select id="propiedadTipo">
-
-            <option value="">
-              Tipo de propiedad
-            </option>
-
-            <option value="Departamento">
-              Departamento
-            </option>
-
-            <option value="Casa">
-              Casa
-            </option>
-
-            <option value="PH">
-              PH
-            </option>
-
-            <option value="Local">
-              Local
-            </option>
-
-            <option value="Oficina">
-              Oficina
-            </option>
-
-            <option value="Terreno">
-              Terreno
-            </option>
-
-            <option value="Otro">
-              Otro
-            </option>
-
-          </select>
-
-
-          <input
-            type="number"
-            id="propiedadAmbientes"
-            min="1"
-            placeholder="Cantidad de ambientes"
-          >
-
-
-          <select id="propiedadMoneda">
-
-            <option value="USD">
-              USD - Dólares
-            </option>
-
-            <option value="ARS">
-              ARS - Pesos argentinos
-            </option>
-
-          </select>
-
-
-          <input
-            type="number"
-            id="propiedadPrecio"
-            min="0"
-            placeholder="Precio pretendido"
-          >
-
-        </div>
-
-
-       <button type="button" id="btnGuardarCliente">
-          Guardar cliente
-        </button>
-
-        <button
-          type="button"
-          onclick="volverInicio()"
-        >
-          ← Volver
-        </button>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <footer>
-    JAT Nexo
-  </footer>
-
-
- <script type="module">
-
-   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyChga286wDg0Ds9k1i0x0ImME21fCybTm4",
-  authDomain: "jat-nexo.firebaseapp.com",
-  projectId: "jat-nexo",
-  storageBucket: "jat-nexo.firebasestorage.app",
-  messagingSenderId: "123468270889",
-  appId: "1:123468270889:web:6a507a7d01e1bf23553b38"
-};
-
-
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-  function abrirClientes() {
-
-  document.querySelector("main > .bienvenida").style.display = "none";
-  document.querySelector("main > .menu").style.display = "none";
-
-  document.getElementById("menuClientes").style.display = "block";
-  document.getElementById("pantallaClientes").style.display = "none";
-
+<header><h1>JAT Nexo</h1><p>Tu asistente inmobiliario</p></header>
+<main><div id="notificacion" role="status" aria-live="polite"></div><div id="conexion" aria-live="polite"></div><div id="pantalla"><p>Cargando JAT Nexo…</p></div></main>
+<footer>JAT Nexo · V1</footer>
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
+import {getFirestore,collection,doc,setDoc,updateDoc,writeBatch,onSnapshot,serverTimestamp} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js';
+const firebaseConfig={apiKey:'AIzaSyChga286wDg0Ds9k1i0x0ImME21fCybTm4',authDomain:'jat-nexo.firebaseapp.com',projectId:'jat-nexo',storageBucket:'jat-nexo.firebasestorage.app',messagingSenderId:'123468270889',appId:'1:123468270889:web:6a507a7d01e1bf23553b38'};
+const db=getFirestore(initializeApp(firebaseConfig));
+const $=id=>document.getElementById(id);
+const TIPOS=['Departamento','Casa','PH','Local','Oficina','Terreno','Otro'];
+const OPERACIONES=['Busca comprar','Busca alquilar','Quiere vender','Quiere alquilar propiedad'];
+const ESTADOS=['Pendiente','Contactado','Visita agendada','En negociación','Cerrado','Descartado'];
+const datos={clientes:[],propiedades:[],seguimientos:[]};
+const carga={clientes:false,propiedades:false,seguimientos:false};
+const errores={};
+let pantalla='inicio',edicion=null,ocupado=false,consulta='',filtroEstado='';
+// Keep a generated document reference across a failed retry: repeated clicks/retries
+// update the same document instead of creating another copy.
+let referenciaNueva=null;
+const escapar=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const normalizar=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/\s+/g,' ');
+const barrios=v=>[...new Set(String(v??'').split('+').map(x=>x.trim()).filter(Boolean))];
+const busca=c=>['Busca comprar','Busca alquilar'].includes(c.operacion);
+const propietario=c=>['Quiere vender','Quiere alquilar propiedad'].includes(c.operacion);
+const porId=(coleccion,id)=>datos[coleccion].find(x=>x.id===id);
+const importe=(valor,moneda)=>`${moneda||'USD'} ${Number(valor||0).toLocaleString('es-AR',{maximumFractionDigits:2})}`;
+const fechaHoy=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
+const fechaTexto=v=>/^\d{4}-\d{2}-\d{2}$/.test(v||'')?v.split('-').reverse().join('/'): 'Sin fecha';
+const boton=(texto,accion,id='',clase='')=>`<button type="button" class="${clase}" data-accion="${accion}" data-id="${escapar(id)}">${escapar(texto)}</button>`;
+const volver=destino=>boton('← Volver',`ir:${destino}`,'','secundario');
+const cabecera=(titulo,sub='')=>`<div class="bienvenida"><h2>${escapar(titulo)}</h2>${sub?`<p class="muted">${escapar(sub)}</p>`:''}</div>`;
+function avisar(texto,error=false){$('notificacion').innerHTML=`<div class="aviso ${error?'error':'exito'}">${escapar(texto)}</div>`;}
+function estadoConexion(){ $('conexion').innerHTML=Object.keys(datos).map(k=>errores[k]?`<div class="aviso error">No se pudo leer ${k}: ${escapar(errores[k])}. Revisá la conexión y los permisos de Firestore. ${boton('Reintentar lectura','recargar',k)}</div>`:!carga[k]?`<p class="muted">Cargando ${k}…</p>`:'').join(''); }
+function disponible(...nombres){return nombres.every(k=>carga[k]&&!errores[k]);}
+function requerir(...nombres){if(!disponible(...nombres)){avisar('Esperá a que los datos se carguen o reintentá la lectura antes de continuar.',true);return false;}return true;}
+const suscripciones={};
+function escuchar(nombre){
+ suscripciones[nombre]?.();carga[nombre]=false;delete errores[nombre];estadoConexion();
+ suscripciones[nombre]=onSnapshot(collection(db,nombre),s=>{datos[nombre]=s.docs.map(d=>({...d.data(),id:d.id}));carga[nombre]=true;delete errores[nombre];estadoConexion();if(!pantalla.endsWith('Formulario'))renderizar();},e=>{carga[nombre]=false;errores[nombre]=e.code||e.message;estadoConexion();if(!pantalla.endsWith('Formulario'))renderizar();});
 }
-
-function nuevoCliente() {
-
-  document.getElementById("menuClientes").style.display = "none";
-  document.getElementById("pantallaClientes").style.display = "block";
-
-}
-   function verClientesGuardados() {
-
-  document.getElementById("menuClientes").style.display = "none";
-
-  alert("📋 Acá vamos a mostrar los clientes guardados.");
-
-}
-    function volverInicio() {
-
-      document.getElementById(
-        "pantallaClientes"
-      ).style.display = "none";
-
-      document.querySelector(
-        ".bienvenida"
-      ).style.display = "block";
-
-      document.querySelector(
-        ".menu"
-      ).style.display = "grid";
-
-    }
-
-
-    function cambiarTipoCliente() {
-
-      const operacion =
-        document.getElementById(
-          "clienteOperacion"
-        ).value;
-
-      const datosBusqueda =
-        document.getElementById(
-          "datosBusqueda"
-        );
-
-      const datosPropiedad =
-        document.getElementById(
-          "datosPropiedad"
-        );
-
-
-      if (
-        operacion === "Quiere vender" ||
-        operacion === "Quiere alquilar propiedad"
-      ) {
-
-        datosBusqueda.style.display =
-          "none";
-
-        datosPropiedad.style.display =
-          "block";
-
-      } else {
-
-        datosBusqueda.style.display =
-          "block";
-
-        datosPropiedad.style.display =
-          "none";
-
-      }
-
-    }
-
-document.getElementById("btnGuardarCliente").addEventListener("click", guardarCliente);
-
-async function guardarCliente() {
-
-  const nombre = document.getElementById("clienteNombre").value.trim();
-  const telefono = document.getElementById("clienteTelefono").value.trim();
-  const operacion = document.getElementById("clienteOperacion").value;
-
-  if (!nombre) {
-    alert("Ingresá el nombre y apellido del cliente.");
-    return;
-  }
-
-  if (!operacion) {
-    alert("Seleccioná qué necesita el cliente.");
-    return;
-  }
-
-  const cliente = {
-    nombre: nombre,
-    telefono: telefono,
-    operacion: operacion,
-    fechaCreacion: serverTimestamp()
-  };
-
-  if (
-    operacion === "Busca comprar" ||
-    operacion === "Busca alquilar"
-  ) {
-
-    const tiposSeleccionados = Array.from(
-      document.querySelectorAll(
-        'input[name="clienteTipoPropiedad"]:checked'
-      )
-    ).map(opcion => opcion.value);
-
-    const zona = document.getElementById("clienteZona").value.trim();
-    const moneda = document.getElementById("clienteMoneda").value;
-    const presupuesto = Number(
-      document.getElementById("clientePresupuesto").value
-    );
-    const ambientes = Number(
-      document.getElementById("clienteAmbientes").value
-    );
-
-    if (tiposSeleccionados.length === 0) {
-      alert("Seleccioná al menos un tipo de propiedad.");
-      return;
-    }
-
-    if (presupuesto < 0) {
-      alert("El presupuesto no puede ser negativo.");
-      return;
-    }
-
-    if (ambientes < 1) {
-      alert("La cantidad de ambientes debe ser 1 o más.");
-      return;
-    }
-
-    cliente.tiposPropiedad = tiposSeleccionados;
-    cliente.zona = zona;
-    cliente.moneda = moneda;
-    cliente.presupuestoMaximo = presupuesto;
-    cliente.ambientes = ambientes;
-
-  } else {
-
-    const direccion = document.getElementById("propiedadDireccion").value.trim();
-    const zona = document.getElementById("propiedadZona").value.trim();
-    const tipo = document.getElementById("propiedadTipo").value;
-    const moneda = document.getElementById("propiedadMoneda").value;
-
-    const ambientes = Number(
-      document.getElementById("propiedadAmbientes").value
-    );
-
-    const precio = Number(
-      document.getElementById("propiedadPrecio").value
-    );
-
-    if (ambientes < 1) {
-      alert("La cantidad de ambientes debe ser 1 o más.");
-      return;
-    }
-
-    if (precio < 0) {
-      alert("El precio no puede ser negativo.");
-      return;
-    }
-
-    cliente.propiedad = {
-      direccion: direccion,
-      zona: zona,
-      tipo: tipo,
-      ambientes: ambientes,
-      moneda: moneda,
-      precio: precio
-    };
-  }
-
-  try {
-
-    await addDoc(
-      collection(db, "clientes"),
-      cliente
-    );
-
-    alert("✅ Cliente guardado correctamente");
-
-  } catch (error) {
-
-    console.error("Error al guardar cliente:", error);
-
-    alert(
-      "❌ No se pudo guardar el cliente. Revisá la conexión con Firebase."
-    );
-  }
-}
-
-window.abrirClientes = abrirClientes;
-   window.nuevoCliente = nuevoCliente;
-window.verClientesGuardados = verClientesGuardados;
-window.volverInicio = volverInicio;
-window.cambiarTipoCliente = cambiarTipoCliente;
-   
-  </script>
-
+function cambiar(destino){if(ocupado)return; pantalla=destino;edicion=null;referenciaNueva=null;consulta='';filtroEstado='';$('notificacion').textContent='';renderizar();window.scrollTo(0,0);}
+function opciones(valores,valor,placeholder=''){return (placeholder?`<option value="">${escapar(placeholder)}</option>`:'')+valores.map(v=>`<option value="${escapar(v)}" ${v===valor?'selected':''}>${escapar(v)}</option>`).join('');}
+function campo(id,titulo,valor='',tipo='text',atributos=''){return `<label for="${id}">${escapar(titulo)}</label><input id="${id}" name="${id}" type="${tipo}" value="${escapar(valor)}" ${atributos}>`;}
+function selector(id,titulo,valores,valor,placeholder=''){return `<label for="${id}">${escapar(titulo)}</label><select id="${id}" name="${id}">${opciones(valores,valor,placeholder)}</select>`;}
+function datosInmueble(prefijo,p={}){return campo(prefijo+'Direccion','Dirección',p.direccion||'','text','required maxlength="200"')+campo(prefijo+'Zona','Barrio / zona',p.zona||'','text','required maxlength="150"')+selector(prefijo+'Tipo','Tipo de propiedad',TIPOS,p.tipo||'','Seleccionar tipo')+campo(prefijo+'Ambientes','Ambientes',p.ambientes??'','number','required min="0" step="1"')+selector(prefijo+'Moneda','Moneda',['USD','ARS'],p.moneda||'USD')+campo(prefijo+'Precio','Precio',p.precio??'','number','required min="0" step="0.01"');}
+function formularioCliente(){const c=porId('clientes',edicion)||{};return cabecera(edicion?'Editar cliente':'Nuevo cliente')+`<form id="clienteForm" class="bienvenida">${campo('nombre','Nombre y apellido',c.nombre||'','text','required maxlength="120"')}${campo('telefono','Teléfono / WhatsApp (con código de país)',c.telefono||'','tel','maxlength="40" placeholder="Ej.: +54 9 11 1234 5678"')}${campo('email','Email (opcional)',c.email||'','email','maxlength="200"')}${selector('operacion','¿Qué necesita el cliente?',OPERACIONES,c.operacion||'','Seleccionar operación')}<fieldset id="busquedaCampos" style="border:0;padding:0;margin:0"><legend class="titulo-opciones">Datos de búsqueda</legend><div class="tipos-propiedad">${TIPOS.map(t=>`<label class="opcion-tipo"><input type="checkbox" name="tipoBusqueda" value="${t}" ${(c.tiposPropiedad||[]).includes(t)?'checked':''}>${t}</label>`).join('')}</div>${campo('zona','Barrios que busca (separados por +)',c.zona||'','text','required maxlength="250" placeholder="Palermo + Belgrano"')}${selector('moneda','Moneda',['USD','ARS'],c.moneda||'USD')}${campo('presupuesto','Presupuesto máximo',c.presupuestoMaximo??'','number','required min="0" step="0.01"')}${campo('ambientes','Ambientes mínimos',c.ambientes??'','number','required min="0" step="1"')}</fieldset><fieldset id="propietarioCampos" style="border:0;padding:0;margin:0"><legend class="titulo-opciones">Propiedad del cliente</legend><p class="muted">Estos datos quedan en su ficha. Después podés usar “Cargar propiedad” para incorporarla al catálogo y generar coincidencias.</p>${datosInmueble('dueno',c.propiedad||{})}</fieldset><button type="submit">${edicion?'Guardar cambios':'Guardar cliente'}</button>${volver('clientes')}</form>`;}
+function ajustarOperacion(){const esPropietario=OPERACIONES.slice(2).includes($('operacion').value);$('busquedaCampos').hidden=esPropietario;$('busquedaCampos').disabled=esPropietario;$('propietarioCampos').hidden=!esPropietario;$('propietarioCampos').disabled=!esPropietario;}
+function formularioPropiedad(){const p=edicion?porId('propiedades',edicion)||{}:(window.borradorPropiedad||{});return cabecera(edicion?'Editar propiedad':'Nueva propiedad')+`<form id="propiedadForm" class="bienvenida">${datosInmueble('inmueble',p)}${selector('inmuebleOperacion','Operación',['Venta','Alquiler'],p.operacion||'Venta')}${selector('inmuebleEstado','Estado',['Disponible','Reservada','Vendida','Alquilada'],p.estado||'Disponible')}<label for="propietarioId">Propietario (opcional)</label><select id="propietarioId"><option value="">Sin propietario vinculado</option>${datos.clientes.filter(c=>propietario(c)||c.id===p.propietarioId).map(c=>`<option value="${escapar(c.id)}" ${c.id===p.propietarioId?'selected':''}>${escapar(c.nombre)}</option>`).join('')}</select><p class="muted">Para vincular otro propietario, cargalo primero en Clientes como vendedor o propietario que alquila.</p><label for="descripcion">Descripción (opcional)</label><textarea id="descripcion" maxlength="2000" rows="3">${escapar(p.descripcion||'')}</textarea><button type="submit">${edicion?'Guardar cambios':'Guardar propiedad'}</button>${volver('propiedades')}</form>`;}
+function formularioSeguimiento(){const s=edicion?porId('seguimientos',edicion)||{}:(window.borradorSeguimiento||{});return cabecera(edicion?'Editar seguimiento':'Nuevo seguimiento')+`<form id="seguimientoForm" class="bienvenida"><label for="seguimientoCliente">Cliente</label><select id="seguimientoCliente" required><option value="">Seleccionar cliente</option>${datos.clientes.map(c=>`<option value="${escapar(c.id)}" ${c.id===s.clienteId?'selected':''}>${escapar(c.nombre)}</option>`).join('')}</select><label for="seguimientoPropiedad">Propiedad (opcional)</label><select id="seguimientoPropiedad"><option value="">Sin propiedad</option>${datos.propiedades.map(p=>`<option value="${escapar(p.id)}" ${p.id===s.propiedadId?'selected':''}>${escapar(p.direccion)} · ${escapar(p.operacion)}</option>`).join('')}</select>${selector('seguimientoEstado','Estado',ESTADOS,s.estado||'Pendiente')}${campo('seguimientoFecha','Fecha',s.fecha||fechaHoy(),'date','required')}<label for="nota">Nota / próxima acción</label><textarea id="nota" required maxlength="2000" rows="4">${escapar(s.nota||'')}</textarea><button type="submit">${edicion?'Guardar cambios':'Guardar seguimiento'}</button>${volver('seguimientos')}</form>`;}
+function barraBusqueda(placeholder){return campo('buscar',placeholder,consulta,'search','maxlength="200"');}
+function listaClientes(){if(!disponible('clientes'))return '<p class="muted">El listado estará disponible al completar la lectura de clientes.</p>';const lista=datos.clientes.filter(c=>normalizar([c.nombre,c.telefono,c.email,c.zona,c.operacion].join(' ')).includes(normalizar(consulta))).sort((a,b)=>String(a.nombre||'').localeCompare(String(b.nombre||''),'es'));return lista.length?lista.map(c=>`<article class="registro"><h3>${escapar(c.nombre)}</h3><span class="etiqueta">${escapar(c.operacion)}</span><p>${escapar(c.telefono||'Sin teléfono')}${c.email?` · ${escapar(c.email)}`:''}</p><p class="muted">${busca(c)?`${escapar((c.tiposPropiedad||[]).join(', '))} · ${escapar(c.zona)}<br>${escapar(importe(c.presupuestoMaximo,c.moneda))} · ${escapar(c.ambientes)} ambientes mínimos`:c.propiedad?`${escapar(c.propiedad.direccion)} · ${escapar(c.propiedad.zona)} · ${escapar(c.propiedad.tipo)}<br>${escapar(importe(c.propiedad.precio,c.propiedad.moneda))} · ${escapar(c.propiedad.ambientes)} ambientes`:'Sin datos de propiedad'}</p><div class="acciones">${boton('Editar','editarCliente',c.id)}${boton('Eliminar','eliminarCliente',c.id,'peligro')}${boton('WhatsApp','whatsappCliente',c.id)}${boton('Seguimiento','seguimientoCliente',c.id)}${propietario(c)&&c.propiedad?boton('Cargar propiedad','propiedadCliente',c.id):''}</div></article>`).join(''):'<p class="muted">No hay clientes para mostrar.</p>';}
+function listaPropiedades(){if(!disponible('propiedades'))return '<p class="muted">El listado estará disponible al completar la lectura de propiedades.</p>';const lista=datos.propiedades.filter(p=>normalizar([p.direccion,p.zona,p.tipo,p.operacion,p.estado].join(' ')).includes(normalizar(consulta))).sort((a,b)=>String(a.direccion||'').localeCompare(String(b.direccion||''),'es'));return lista.length?lista.map(p=>`<article class="registro"><h3>${escapar(p.direccion)}</h3><span class="etiqueta">${escapar(p.operacion)} · ${escapar(p.estado||'Disponible')}</span><p>${escapar(p.tipo)} · ${escapar(p.zona)} · ${escapar(p.ambientes)} ambientes<br>${escapar(importe(p.precio,p.moneda))}</p><p class="muted">Propietario: ${escapar(porId('clientes',p.propietarioId)?.nombre||(p.propietarioId?'Cliente no disponible':'Sin vincular'))}</p>${p.descripcion?`<p>${escapar(p.descripcion)}</p>`:''}<div class="acciones">${boton('Editar','editarPropiedad',p.id)}${boton('Eliminar','eliminarPropiedad',p.id,'peligro')}</div></article>`).join(''):'<p class="muted">No hay propiedades para mostrar.</p>';}
+// Exact normalized neighborhood membership, same currency (no currency conversion),
+// price <= maximum budget and rooms >= requested minimum. No fuzzy matches.
+function coincide(c,p){const zonas=barrios(c.zona).map(normalizar);return busca(c)&&p.estado==='Disponible'&&p.operacion===(c.operacion==='Busca comprar'?'Venta':'Alquiler')&&(c.tiposPropiedad||[]).map(normalizar).includes(normalizar(p.tipo))&&zonas.length>0&&zonas.includes(normalizar(p.zona))&&c.moneda===p.moneda&&Number.isFinite(Number(c.presupuestoMaximo))&&Number.isFinite(Number(p.precio))&&Number.isFinite(Number(c.ambientes))&&Number.isFinite(Number(p.ambientes))&&Number(p.precio)>=0&&Number(p.precio)<=Number(c.presupuestoMaximo)&&Number(p.ambientes)>=Number(c.ambientes);}
+function listaCoincidencias(){if(!disponible('clientes','propiedades'))return '<p class="muted">Esperando los datos de clientes y propiedades.</p>';const pares=datos.clientes.flatMap(c=>datos.propiedades.filter(p=>coincide(c,p)).map(p=>({c,p})));return pares.length?pares.map(({c,p})=>`<article class="registro"><h3>${escapar(c.nombre)} ↔ ${escapar(p.direccion)}</h3><p>${escapar(p.operacion)} · ${escapar(p.tipo)} · ${escapar(p.zona)}<br>${escapar(importe(p.precio,p.moneda))} · ${escapar(p.ambientes)} ambientes</p><p class="muted">Cumple tipo, barrio, moneda, presupuesto y ambientes mínimos.</p><div class="acciones">${boton('Preparar WhatsApp','whatsappCoincidencia',JSON.stringify([c.id,p.id]))}${boton('Crear seguimiento','seguimientoCoincidencia',JSON.stringify([c.id,p.id]))}</div></article>`).join(''):'<p class="muted">Todavía no hay coincidencias. Cargá clientes y propiedades disponibles que cumplan los criterios.</p>';}
+function listaSeguimientos(){if(!disponible('seguimientos','clientes','propiedades'))return '<p class="muted">Esperando los datos para mostrar seguimientos.</p>';const lista=datos.seguimientos.filter(s=>!filtroEstado||s.estado===filtroEstado).sort((a,b)=>String(a.fecha||'').localeCompare(String(b.fecha||'')));return lista.length?lista.map(s=>`<article class="registro"><h3>${escapar(porId('clientes',s.clienteId)?.nombre||'Cliente no disponible')}</h3><span class="etiqueta">${escapar(s.estado)} · ${fechaTexto(s.fecha)}</span>${s.fecha<fechaHoy()&&!['Cerrado','Descartado'].includes(s.estado)?'<span class="etiqueta">Fecha vencida</span>':''}<p class="muted">${escapar(porId('propiedades',s.propiedadId)?.direccion||'Sin propiedad vinculada')}</p><p>${escapar(s.nota)}</p><div class="acciones">${boton('Editar','editarSeguimiento',s.id)}${boton('Eliminar','eliminarSeguimiento',s.id,'peligro')}${porId('clientes',s.clienteId)?boton('WhatsApp','whatsappCliente',s.clienteId):''}</div></article>`).join(''):'<p class="muted">No hay seguimientos para mostrar.</p>';}
+function renderizar(){let html='';switch(pantalla){case 'inicio':html=cabecera('Bienvenido 👋','Organizá tus clientes, propiedades y oportunidades desde un solo lugar.')+`<div class="menu">${[['👤','Clientes','clientes'],['🏠','Propiedades','propiedades'],['🎯','Coincidencias','coincidencias'],['📲','Seguimientos','seguimientos']].map(([i,t,d])=>`<button class="tarjeta" type="button" data-accion="ir:${d}"><div class="icono">${i}</div><strong>${t}</strong></button>`).join('')}</div>`;break;case 'clientes':html=cabecera('👤 Clientes','Administrá tus clientes y oportunidades.')+`<div class="menu">${boton('➕ Nuevo cliente','nuevoCliente')}${boton('📋 Clientes guardados','ir:clientesLista')}</div>`+volver('inicio');break;case 'clientesLista':html=cabecera('📋 Clientes guardados')+boton('➕ Nuevo cliente','nuevoCliente')+barraBusqueda('Buscar por nombre, teléfono, email, barrio u operación')+`<div id="lista">${listaClientes()}</div>`+volver('clientes');break;case 'clienteFormulario':html=formularioCliente();break;case 'propiedades':html=cabecera('🏠 Propiedades')+boton('➕ Nueva propiedad','nuevaPropiedad')+barraBusqueda('Buscar por dirección, barrio, tipo, operación o estado')+`<div id="lista">${listaPropiedades()}</div>`+volver('inicio');break;case 'propiedadFormulario':html=formularioPropiedad();break;case 'coincidencias':html=cabecera('🎯 Coincidencias','Se comparan propiedades disponibles por operación, tipo, barrio, moneda, precio máximo y ambientes mínimos. Los barrios se separan con +. No se convierten monedas.')+listaCoincidencias()+volver('inicio');break;case 'seguimientos':html=cabecera('📲 Seguimientos')+boton('➕ Nuevo seguimiento','nuevoSeguimiento')+selector('filtroEstado','Filtrar por estado',ESTADOS,filtroEstado,'Todos')+`<div id="lista">${listaSeguimientos()}</div>`+volver('inicio');break;case 'seguimientoFormulario':html=formularioSeguimiento();break;} $('pantalla').innerHTML=html;if(pantalla==='clienteFormulario')ajustarOperacion();bloquear(ocupado);}
+function bloquear(valor){ocupado=valor;document.querySelectorAll('button').forEach(b=>b.disabled=valor);const f=document.querySelector('form');if(f)f.querySelectorAll('input,select,textarea').forEach(x=>{x.disabled=valor;});if(!valor&&pantalla==='clienteFormulario')ajustarOperacion();}
+function texto(id){return $(id).value.trim();}
+function numero(id,entero=false){const crudo=texto(id);const n=Number(crudo);if(!crudo||!Number.isFinite(n)||n<0||(entero&&!Number.isInteger(n)))throw new Error('Ingresá importes válidos y ambientes enteros no negativos.');return n;}
+function leerInmueble(prefijo){const p={direccion:texto(prefijo+'Direccion'),zona:texto(prefijo+'Zona'),tipo:texto(prefijo+'Tipo'),ambientes:numero(prefijo+'Ambientes',true),moneda:texto(prefijo+'Moneda'),precio:numero(prefijo+'Precio')};if(!p.direccion||!p.zona||!TIPOS.includes(p.tipo))throw new Error('Completá dirección, barrio y tipo de propiedad.');if(p.zona.includes('+'))throw new Error('Cada propiedad debe tener un único barrio. Usá + solamente en la búsqueda del cliente.');return p;}
+function errorOperacion(e){console.error('JAT Nexo:',e);avisar(e.code?`No se pudo guardar el cambio (${e.code}). Revisá la conexión y los permisos de Firestore. Los datos del formulario se conservan para reintentar.`:e.message,true);}
+async function guardar(evento){evento.preventDefault();if(ocupado)return;const formulario=evento.target;if(!formulario.reportValidity())return;let nombre,payload;try{if(formulario.id==='clienteForm'){nombre='clientes';payload={nombre:texto('nombre'),telefono:texto('telefono'),email:texto('email'),operacion:texto('operacion')};if(!payload.nombre||!OPERACIONES.includes(payload.operacion))throw new Error('Completá nombre y operación.');if(busca(payload)){const tipos=Array.from(formulario.querySelectorAll('[name="tipoBusqueda"]:checked')).map(x=>x.value);if(!tipos.length)throw new Error('Seleccioná al menos un tipo de propiedad.');const zonas=barrios(texto('zona'));if(!zonas.length)throw new Error('Ingresá al menos un barrio.');Object.assign(payload,{tiposPropiedad:tipos,zona:zonas.join(' + '),moneda:texto('moneda'),presupuestoMaximo:numero('presupuesto'),ambientes:numero('ambientes',true),propiedad:null});}else{payload.propiedad=leerInmueble('dueno');Object.assign(payload,{tiposPropiedad:[],zona:'',moneda:'USD',presupuestoMaximo:0,ambientes:0});}}
+ else if(formulario.id==='propiedadForm'){nombre='propiedades';payload={...leerInmueble('inmueble'),operacion:texto('inmuebleOperacion'),estado:texto('inmuebleEstado'),propietarioId:texto('propietarioId'),descripcion:texto('descripcion')};if(!requerir('clientes','propiedades'))return;if(payload.propietarioId&&!porId('clientes',payload.propietarioId))throw new Error('El propietario ya no existe. Elegí otro o dejalo sin vincular.');}
+ else if(formulario.id==='seguimientoForm'){nombre='seguimientos';if(!requerir('clientes','propiedades','seguimientos'))return;payload={clienteId:texto('seguimientoCliente'),propiedadId:texto('seguimientoPropiedad'),estado:texto('seguimientoEstado'),fecha:texto('seguimientoFecha'),nota:texto('nota')};if(!porId('clientes',payload.clienteId))throw new Error('Seleccioná un cliente existente.');if(payload.propiedadId&&!porId('propiedades',payload.propiedadId))throw new Error('La propiedad ya no existe.');if(!payload.nota||!payload.fecha)throw new Error('Completá fecha y nota.');}else return;
+ if(edicion&&!confirm('¿Guardar los cambios de este registro?'))return;
+ bloquear(true);const editando=edicion;const ref=editando?doc(db,nombre,editando):(referenciaNueva||(referenciaNueva=doc(collection(db,nombre))));if(editando){await updateDoc(ref,{...payload,fechaActualizacion:serverTimestamp()});}else{await setDoc(ref,{...payload,fechaCreacion:serverTimestamp()});}
+ // Update memory immediately; snapshot subscription will keep it synchronized.
+ const anterior=porId(nombre,ref.id)||{};datos[nombre]=datos[nombre].filter(x=>x.id!==ref.id).concat({...anterior,...payload,id:ref.id});bloquear(false);window.borradorPropiedad=null;window.borradorSeguimiento=null;cambiar(nombre==='clientes'?'clientesLista':nombre);avisar(editando?'Cambios guardados.':'Registro guardado correctamente. El formulario quedó limpio.');
+ }catch(e){errorOperacion(e);}finally{bloquear(false);}}
+async function eliminar(nombre,id){if(ocupado||!requerir('clientes','propiedades','seguimientos'))return;const registro=porId(nombre,id);if(!registro)return;const props=nombre==='clientes'?datos.propiedades.filter(p=>p.propietarioId===id):[];const segs=nombre==='clientes'?datos.seguimientos.filter(s=>s.clienteId===id):nombre==='propiedades'?datos.seguimientos.filter(s=>s.propiedadId===id):[];
+ if(props.length+segs.length+1>450){avisar('Hay demasiados vínculos para eliminar este registro en una sola operación. Reducí los seguimientos asociados primero.',true);return;}
+ const detalle=nombre==='clientes'?` Se eliminarán ${segs.length} seguimientos y ${props.length} propiedades quedarán sin propietario (las propiedades se conservan).`:nombre==='propiedades'?` Se conservarán los seguimientos, quitando ${segs.length} vínculos con esta propiedad.`:'';
+ if(!confirm(`¿Eliminar ${registro.nombre||registro.direccion||'este seguimiento'}?${detalle} Esta acción no se puede deshacer.`))return;
+ bloquear(true);try{const lote=writeBatch(db);lote.delete(doc(db,nombre,id));props.forEach(p=>lote.update(doc(db,'propiedades',p.id),{propietarioId:'',fechaActualizacion:serverTimestamp()}));segs.forEach(s=>nombre==='clientes'?lote.delete(doc(db,'seguimientos',s.id)):lote.update(doc(db,'seguimientos',s.id),{propiedadId:'',fechaActualizacion:serverTimestamp()}));await lote.commit();datos[nombre]=datos[nombre].filter(x=>x.id!==id);if(nombre==='clientes'){datos.propiedades=datos.propiedades.map(p=>p.propietarioId===id?{...p,propietarioId:''}:p);datos.seguimientos=datos.seguimientos.filter(s=>s.clienteId!==id);}if(nombre==='propiedades')datos.seguimientos=datos.seguimientos.map(s=>s.propiedadId===id?{...s,propiedadId:''}:s);renderizar();avisar('Registro eliminado.');}catch(e){errorOperacion(e);}finally{bloquear(false);}}
+function abrirFormulario(tipo,id=null){const coleccion={cliente:'clientes',propiedad:'propiedades',seguimiento:'seguimientos'}[tipo];if(id&&!porId(coleccion,id))return;if(tipo==='propiedad'&&!requerir('clientes','propiedades'))return;if(tipo==='seguimiento'&&!requerir('clientes','propiedades','seguimientos'))return;cambiar(tipo+'Formulario');edicion=id;renderizar();}
+function prepararWhatsApp(c,p=null){if(!c)return;const telefono=String(c.telefono||'').replace(/\D/g,'');if(!/^\d{8,15}$/.test(telefono)){avisar('Editá el teléfono del cliente e ingresalo con código de país; por ejemplo +54 9 11 1234 5678.',true);return;}let mensaje=`Hola ${c.nombre}, ¿cómo estás? Te contacto por tu consulta inmobiliaria.`;if(p)mensaje=`Hola ${c.nombre}, encontré una propiedad que coincide con tu búsqueda: ${p.tipo} en ${p.zona}, ${p.direccion}, ${p.ambientes} ambientes, ${importe(p.precio,p.moneda)} (${p.operacion}). ¿Querés que coordinemos una visita?`;const url=`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;window.open(url,'_blank','noopener,noreferrer');}
+$('pantalla').addEventListener('click',e=>{const b=e.target.closest('[data-accion]');if(!b||ocupado)return;const accion=b.dataset.accion,id=b.dataset.id;if(accion.startsWith('ir:'))return cambiar(accion.slice(3));switch(accion){case 'nuevoCliente':abrirFormulario('cliente');break;case 'editarCliente':abrirFormulario('cliente',id);break;case 'eliminarCliente':eliminar('clientes',id);break;case 'nuevaPropiedad':window.borradorPropiedad=null;abrirFormulario('propiedad');break;case 'editarPropiedad':abrirFormulario('propiedad',id);break;case 'eliminarPropiedad':eliminar('propiedades',id);break;case 'nuevoSeguimiento':window.borradorSeguimiento=null;abrirFormulario('seguimiento');break;case 'editarSeguimiento':abrirFormulario('seguimiento',id);break;case 'eliminarSeguimiento':eliminar('seguimientos',id);break;case 'whatsappCliente':prepararWhatsApp(porId('clientes',id));break;case 'whatsappCoincidencia':{const [c,p]=JSON.parse(id);prepararWhatsApp(porId('clientes',c),porId('propiedades',p));break;}case 'seguimientoCliente':window.borradorSeguimiento={clienteId:id};abrirFormulario('seguimiento');break;case 'seguimientoCoincidencia':{const [c,p]=JSON.parse(id);window.borradorSeguimiento={clienteId:c,propiedadId:p};abrirFormulario('seguimiento');break;}case 'propiedadCliente':{if(!requerir('clientes','propiedades'))break;const c=porId('clientes',id);if(!c?.propiedad)break;const existente=datos.propiedades.find(p=>p.propietarioId===id&&normalizar(p.direccion)===normalizar(c.propiedad.direccion));if(existente){avisar('Esa propiedad ya está cargada. Se abrió para editarla.');abrirFormulario('propiedad',existente.id);}else{window.borradorPropiedad={...c.propiedad,propietarioId:id,operacion:c.operacion==='Quiere vender'?'Venta':'Alquiler',estado:'Disponible'};abrirFormulario('propiedad');}break;}}});
+$('conexion').addEventListener('click',e=>{const b=e.target.closest('[data-accion="recargar"]');if(b&&!ocupado)escuchar(b.dataset.id);});
+$('pantalla').addEventListener('submit',guardar);
+$('pantalla').addEventListener('change',e=>{if(e.target.id==='operacion')ajustarOperacion();if(e.target.id==='filtroEstado'){filtroEstado=e.target.value;$('lista').innerHTML=listaSeguimientos();}});
+$('pantalla').addEventListener('input',e=>{if(e.target.id==='buscar'){consulta=e.target.value;$('lista').innerHTML=pantalla==='clientesLista'?listaClientes():listaPropiedades();}});
+renderizar();Object.keys(datos).forEach(escuchar);
+</script>
+<script>
+// A failed CDN import must not leave the interface silently stuck on loading.
+window.addEventListener('error',event=>{if(event.message&&document.getElementById('pantalla').textContent.includes('Cargando JAT Nexo'))document.getElementById('conexion').textContent='No se pudo iniciar JAT Nexo. Revisá tu conexión a Internet y recargá la página.';});
+</script>
 </body>
-
 </html>
