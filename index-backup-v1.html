@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>JAT Nexo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #071b33;
+      color: white;
+    }
+
+    header {
+      background: linear-gradient(135deg, #09284d, #075f82);
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #b9d7e8;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 25px 15px;
+    }
+
+    .bienvenida {
+      background: #0d2948;
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .bienvenida h2 {
+      margin-top: 0;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .tarjeta {
+      background: #0d2948;
+      border-radius: 16px;
+      padding: 25px 15px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .tarjeta:hover {
+      background: #123a61;
+    }
+
+    .icono {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .tarjeta h3 {
+      margin: 0;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border: 1px solid #244866;
+      border-radius: 10px;
+      background: #071b33;
+      color: white;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: #8fa8bb;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #087da3;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0a91bb;
+    }
+
+    /* TIPOS DE PROPIEDAD MÚLTIPLES */
+
+    .titulo-opciones {
+      margin-top: 14px;
+      margin-bottom: 8px;
+      color: #b9d7e8;
+      font-size: 14px;
+    }
+
+    .tipos-propiedad {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .opcion-tipo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #071b33;
+      border: 1px solid #244866;
+      border-radius: 10px;
+      padding: 11px;
+      cursor: pointer;
+    }
+
+    .opcion-tipo input {
+      width: auto;
+      margin: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 10px;
+      color: #7794ad;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .menu {
+        grid-template-columns: 1fr;
+      }
+
+      .tipos-propiedad {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>JAT Nexo</h1>
+    <p>Tu asistente inmobiliario</p>
+  </header>
+
+  <main>
+
+    <!-- INICIO -->
+
+    <section class="bienvenida">
+      <h2>Bienvenido 👋</h2>
+      <p>
+        Organizá tus clientes, propiedades y oportunidades
+        desde un solo lugar.
+      </p>
+    </section>
+
+    <section class="menu">
+
+      <div class="tarjeta" onclick="abrirClientes()">
+        <div class="icono">👤</div>
+        <h3>Clientes</h3>
+      </div>
+
+      <div class="tarjeta">
+        <div class="icono">🏠</div>
+        <h3>Propiedades</h3>
+      </div>
+
+      <div class="tarjeta">
+        <div class="icono">🎯</div>
+        <h3>Coincidencias</h3>
+      </div>
+
+      <div class="tarjeta">
+        <div class="icono">📲</div>
+        <h3>Seguimientos</h3>
+      </div>
+
+    </section>
+
+
+    <!-- CLIENTES -->
+
+<section id="menuClientes" style="display:none;">
+
+  <div class="bienvenida">
+    <h2>👤 Clientes</h2>
+    <p>Administrá tus clientes y oportunidades.</p>
+  </div>
+
+  <div class="menu">
+
+    <div class="tarjeta" onclick="nuevoCliente()">
+      <div class="icono">➕</div>
+      <h3>Nuevo cliente</h3>
+    </div>
+
+    <div class="tarjeta" onclick="verClientesGuardados()">
+      <div class="icono">📋</div>
+      <h3>Clientes guardados</h3>
+    </div>
+
+  </div>
+
+  <button type="button" onclick="volverInicio()">
+    ← Volver
+  </button>
+
+</section>
+    
+    <section id="pantallaClientes" style="display:none;">
+
+      <div class="bienvenida">
+        <h2>👤 Clientes</h2>
+        <p>Administrá tus clientes y lo que está buscando cada uno.</p>
+      </div>
+
+      <div class="bienvenida">
+
+        <h3>Nuevo cliente</h3>
+
+        <input
+          type="text"
+          id="clienteNombre"
+          placeholder="Nombre y apellido"
+        >
+
+        <input
+          type="tel"
+          id="clienteTelefono"
+          placeholder="Teléfono / WhatsApp"
+        >
+
+
+        <select
+          id="clienteOperacion"
+          onchange="cambiarTipoCliente()"
+        >
+
+          <option
+            value=""
+            selected
+            disabled
+            hidden
+          >
+            ¿Qué necesita el cliente?
+          </option>
+
+          <option value="Busca comprar">
+            🔎 Busca comprar
+          </option>
+
+          <option value="Busca alquilar">
+            🔎 Busca alquilar
+          </option>
+
+          <option value="Quiere vender">
+            🏠 Quiere vender
+          </option>
+
+          <option value="Quiere alquilar propiedad">
+            🔑 Quiere alquilar su propiedad
+          </option>
+
+        </select>
+
+
+        <!-- DATOS DE BÚSQUEDA -->
+
+        <div id="datosBusqueda">
+
+          <div class="titulo-opciones">
+            Tipo de propiedad que busca
+          </div>
+
+          <div class="tipos-propiedad">
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Departamento"
+              >
+              Departamento
+            </label>
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Casa"
+              >
+              Casa
+            </label>
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="PH"
+              >
+              PH
+            </label>
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Local"
+              >
+              Local
+            </label>
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Oficina"
+              >
+              Oficina
+            </label>
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Terreno"
+              >
+              Terreno
+            </label>
+
+            <label class="opcion-tipo">
+              <input
+                type="checkbox"
+                name="clienteTipoPropiedad"
+                value="Otro"
+              >
+              Otro
+            </label>
+
+          </div>
+
+
+          <input
+            type="text"
+            id="clienteZona"
+            placeholder="Barrios que busca (separar con +)"
+          >
+
+
+          <select id="clienteMoneda">
+
+            <option value="USD">
+              USD - Dólares
+            </option>
+
+            <option value="ARS">
+              ARS - Pesos argentinos
+            </option>
+
+          </select>
+
+
+          <input
+            type="number"
+            id="clientePresupuesto"
+            min="0"
+            placeholder="Presupuesto máximo"
+          >
+
+
+          <input
+            type="number"
+            id="clienteAmbientes"
+            min="1"
+            placeholder="Cantidad de ambientes"
+          >
+
+        </div>
+
+
+        <!-- DATOS DE PROPIEDAD -->
+
+        <div
+          id="datosPropiedad"
+          style="display:none;"
+        >
+
+          <input
+            type="text"
+            id="propiedadDireccion"
+            placeholder="Dirección de la propiedad"
+          >
+
+          <input
+            type="text"
+            id="propiedadZona"
+            placeholder="Barrio / Zona"
+          >
+
+
+          <select id="propiedadTipo">
+
+            <option value="">
+              Tipo de propiedad
+            </option>
+
+            <option value="Departamento">
+              Departamento
+            </option>
+
+            <option value="Casa">
+              Casa
+            </option>
+
+            <option value="PH">
+              PH
+            </option>
+
+            <option value="Local">
+              Local
+            </option>
+
+            <option value="Oficina">
+              Oficina
+            </option>
+
+            <option value="Terreno">
+              Terreno
+            </option>
+
+            <option value="Otro">
+              Otro
+            </option>
+
+          </select>
+
+
+          <input
+            type="number"
+            id="propiedadAmbientes"
+            min="1"
+            placeholder="Cantidad de ambientes"
+          >
+
+
+          <select id="propiedadMoneda">
+
+            <option value="USD">
+              USD - Dólares
+            </option>
+
+            <option value="ARS">
+              ARS - Pesos argentinos
+            </option>
+
+          </select>
+
+
+          <input
+            type="number"
+            id="propiedadPrecio"
+            min="0"
+            placeholder="Precio pretendido"
+          >
+
+        </div>
+
+
+       <button type="button" id="btnGuardarCliente">
+          Guardar cliente
+        </button>
+
+        <button
+          type="button"
+          onclick="volverInicio()"
+        >
+          ← Volver
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    JAT Nexo
+  </footer>
+
+
+ <script type="module">
+
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyChga286wDg0Ds9k1i0x0ImME21fCybTm4",
+  authDomain: "jat-nexo.firebaseapp.com",
+  projectId: "jat-nexo",
+  storageBucket: "jat-nexo.firebasestorage.app",
+  messagingSenderId: "123468270889",
+  appId: "1:123468270889:web:6a507a7d01e1bf23553b38"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+  function abrirClientes() {
+
+  document.querySelector("main > .bienvenida").style.display = "none";
+  document.querySelector("main > .menu").style.display = "none";
+
+  document.getElementById("menuClientes").style.display = "block";
+  document.getElementById("pantallaClientes").style.display = "none";
+
+}
+
+function nuevoCliente() {
+
+  document.getElementById("menuClientes").style.display = "none";
+  document.getElementById("pantallaClientes").style.display = "block";
+
+}
+   function verClientesGuardados() {
+
+  document.getElementById("menuClientes").style.display = "none";
+
+  alert("📋 Acá vamos a mostrar los clientes guardados.");
+
+}
+    function volverInicio() {
+
+      document.getElementById(
+        "pantallaClientes"
+      ).style.display = "none";
+
+      document.querySelector(
+        ".bienvenida"
+      ).style.display = "block";
+
+      document.querySelector(
+        ".menu"
+      ).style.display = "grid";
+
+    }
+
+
+    function cambiarTipoCliente() {
+
+      const operacion =
+        document.getElementById(
+          "clienteOperacion"
+        ).value;
+
+      const datosBusqueda =
+        document.getElementById(
+          "datosBusqueda"
+        );
+
+      const datosPropiedad =
+        document.getElementById(
+          "datosPropiedad"
+        );
+
+
+      if (
+        operacion === "Quiere vender" ||
+        operacion === "Quiere alquilar propiedad"
+      ) {
+
+        datosBusqueda.style.display =
+          "none";
+
+        datosPropiedad.style.display =
+          "block";
+
+      } else {
+
+        datosBusqueda.style.display =
+          "block";
+
+        datosPropiedad.style.display =
+          "none";
+
+      }
+
+    }
+
+document.getElementById("btnGuardarCliente").addEventListener("click", guardarCliente);
+
+async function guardarCliente() {
+
+  const nombre = document.getElementById("clienteNombre").value.trim();
+  const telefono = document.getElementById("clienteTelefono").value.trim();
+  const operacion = document.getElementById("clienteOperacion").value;
+
+  if (!nombre) {
+    alert("Ingresá el nombre y apellido del cliente.");
+    return;
+  }
+
+  if (!operacion) {
+    alert("Seleccioná qué necesita el cliente.");
+    return;
+  }
+
+  const cliente = {
+    nombre: nombre,
+    telefono: telefono,
+    operacion: operacion,
+    fechaCreacion: serverTimestamp()
+  };
+
+  if (
+    operacion === "Busca comprar" ||
+    operacion === "Busca alquilar"
+  ) {
+
+    const tiposSeleccionados = Array.from(
+      document.querySelectorAll(
+        'input[name="clienteTipoPropiedad"]:checked'
+      )
+    ).map(opcion => opcion.value);
+
+    const zona = document.getElementById("clienteZona").value.trim();
+    const moneda = document.getElementById("clienteMoneda").value;
+    const presupuesto = Number(
+      document.getElementById("clientePresupuesto").value
+    );
+    const ambientes = Number(
+      document.getElementById("clienteAmbientes").value
+    );
+
+    if (tiposSeleccionados.length === 0) {
+      alert("Seleccioná al menos un tipo de propiedad.");
+      return;
+    }
+
+    if (presupuesto < 0) {
+      alert("El presupuesto no puede ser negativo.");
+      return;
+    }
+
+    if (ambientes < 1) {
+      alert("La cantidad de ambientes debe ser 1 o más.");
+      return;
+    }
+
+    cliente.tiposPropiedad = tiposSeleccionados;
+    cliente.zona = zona;
+    cliente.moneda = moneda;
+    cliente.presupuestoMaximo = presupuesto;
+    cliente.ambientes = ambientes;
+
+  } else {
+
+    const direccion = document.getElementById("propiedadDireccion").value.trim();
+    const zona = document.getElementById("propiedadZona").value.trim();
+    const tipo = document.getElementById("propiedadTipo").value;
+    const moneda = document.getElementById("propiedadMoneda").value;
+
+    const ambientes = Number(
+      document.getElementById("propiedadAmbientes").value
+    );
+
+    const precio = Number(
+      document.getElementById("propiedadPrecio").value
+    );
+
+    if (ambientes < 1) {
+      alert("La cantidad de ambientes debe ser 1 o más.");
+      return;
+    }
+
+    if (precio < 0) {
+      alert("El precio no puede ser negativo.");
+      return;
+    }
+
+    cliente.propiedad = {
+      direccion: direccion,
+      zona: zona,
+      tipo: tipo,
+      ambientes: ambientes,
+      moneda: moneda,
+      precio: precio
+    };
+  }
+
+  try {
+
+    await addDoc(
+      collection(db, "clientes"),
+      cliente
+    );
+
+    alert("✅ Cliente guardado correctamente");
+
+  } catch (error) {
+
+    console.error("Error al guardar cliente:", error);
+
+    alert(
+      "❌ No se pudo guardar el cliente. Revisá la conexión con Firebase."
+    );
+  }
+}
+
+window.abrirClientes = abrirClientes;
+   window.nuevoCliente = nuevoCliente;
+window.verClientesGuardados = verClientesGuardados;
+window.volverInicio = volverInicio;
+window.cambiarTipoCliente = cambiarTipoCliente;
+   
+  </script>
+
+</body>
+
+</html>
