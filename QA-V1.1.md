@@ -64,3 +64,48 @@ La limpieza se verificó mediante recarga, lecturas de Firestore en tiempo real,
 Las diferencias son de presentación y navegación: métricas/resúmenes y accesos a acciones existentes; selección visual de operación sincronizada con el selector original; autocomplete=off en Nuevo cliente (el navegador puede decidir ignorarlo). No cambió Firebase, las colecciones, el modelo de datos, los estados ni el algoritmo de coincidencias. No se agregaron módulos, login, npm, IA ni dependencias instalables.
 
 No se encontraron bugs funcionales. Durante la revisión visual se corrigió una prioridad CSS que coloreaba como primarios algunos botones secundarios y de eliminación.
+
+
+## Revalidación independiente del estado actual — 2026-10-06
+
+Repositorio revisado: `main`, commit `a13de26467cd43bdc53e632f62b2f868f999ecdf`, coincidente con el remoto al comenzar. El checkout estaba limpio. La implementación V1.1 ya estaba completa: dashboard con métricas reales, últimos clientes, próximos seguimientos y resumen de propiedades; navegación lateral e inferior; tarjetas y formularios responsive; iconos SVG y jerarquía de acciones. No se encontraron tareas pendientes de rediseño ni regresiones que justificaran modificar `index.html`.
+
+`index-backup-v1-functional.html` coincide byte a byte con `index.html` del commit V1 `5bac0bd`. Las nueve funciones centrales `coincide`, `guardar`, `eliminar`, `leerInmueble`, `numero`, `texto`, `errorOperacion`, `abrirFormulario` y `prepararWhatsApp` coinciden con el backup funcional. Ambos backups se conservaron sin cambios.
+
+Esta repetición se ejecutó con Playwright y Chromium 151 sobre el `index.html` actual servido localmente, usando Firebase CDN y Firestore real, con verificación HTTPS activa. No se volvió a publicar ni se ejecutó esta repetición sobre GitHub Pages. La publicación V1.1 había sido comprobada visualmente por el usuario; la prueba anterior sobre Pages se mantiene documentada arriba. No se usaron mocks de Firestore en esta repetición.
+
+### Repetición de los 17 casos
+
+| # | Caso | Resultado |
+|---|---|---|
+| 1 | Alta comprador con email opcional y selección múltiple | PASS |
+| 2 | Listado en tiempo real del comprador | PASS |
+| 3 | Alta vendedor y datos de propiedad | PASS |
+| 4 | Cargar propiedad con propietario vinculado | PASS |
+| 5 | Listado de propiedad guardada | PASS |
+| 6 | Compatibilidad operación/tipo/barrio/moneda/precio/ambientes | PASS |
+| 7 | Coincidencia comprador QA y propiedad QA | PASS |
+| 8 | Seguimiento vinculado y persistido | PASS |
+| 9 | Edición de cliente persiste tras recarga | PASS |
+| 10 | Edición de propiedad persiste tras recarga | PASS |
+| 11 | Navegación y Volver | PASS |
+| 12 | Nuevo cliente limpio después de abandonar/guardar/editar | PASS |
+| 13 | Campos obligatorios rechazados | PASS |
+| 14 | Presupuesto negativo rechazado | PASS |
+| 15 | Ambientes negativos rechazados | PASS |
+| 16 | Precio negativo rechazado | PASS |
+| 17 | Doble clic: un registro en cada colección | PASS |
+
+Resultado: **17 PASS / 0 FAIL**, 17 casos ejecutados. Se comprobaron las altas mediante la interfaz y lecturas de Firestore, la persistencia después de recargar, los vínculos y los criterios de coincidencia. La validación de campos obligatorios y números negativos se comprobó con los estados de validez nativos del navegador. El doble clic se repitió en clientes, propiedades y seguimientos: un solo documento por alta. También se verificaron filtro y edición de seguimiento, y la eliminación por interfaz de los registros propios de QA. Ambos scripts de `index.html` pasaron nuevamente `node --check`; no hubo errores JavaScript de página.
+
+### Escritorio y celular
+
+Escritorio a 1363 px: dashboard revisado visualmente y E2E completo aprobado. Celular mediante viewports de Chromium a 320, 390 y 760 px: navegación inferior operativa y revisión del dashboard, Clientes, Propiedades, Coincidencias, Seguimientos y los tres formularios. En las 24 comprobaciones móviles `scrollWidth === clientWidth`; no hubo desbordamiento horizontal. El input de nombre conservó 16 px. Capturas del dashboard revisadas visualmente en los cuatro tamaños. Esta prueba no representa teclado virtual ni dispositivo físico, y los 17 casos de escritura se ejecutaron en escritorio.
+
+### Limpieza y datos reales
+
+Marcador exclusivo de esta ejecución: `QA V11 RECHECK 20261006124413`. Se crearon 3 clientes, 2 propiedades y 2 seguimientos QA. Los 7 registros se eliminaron al terminar. Las lecturas finales de las tres colecciones confirmaron **0 registros con este marcador**.
+
+Estado inicial y final: **1 cliente, 0 propiedades y 0 seguimientos**. La comparación completa de los documentos existentes antes y después, incluyendo campos y metadatos de Firestore, fue idéntica. No se modificaron ni eliminaron datos reales. No se enviaron mensajes de WhatsApp.
+
+Único archivo del repositorio actualizado por esta revisión: `QA-V1.1.md`, para registrar la nueva evidencia. No se agregaron funcionalidades ni se cambió la arquitectura.
