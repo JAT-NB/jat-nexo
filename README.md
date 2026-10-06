@@ -38,7 +38,7 @@ Colecciones: `clientes` (compatible con registros anteriores), `propiedades` y `
 
 ## Verificación
 
-V1.2: **17 E2E PASS + 22 UAT PASS = 39 PASS / 0 FAIL**, con Firestore real, escritorio y circuito móvil 390 × 844. Las cuatro mejoras UX y la limpieza se documentan en [QA-V1.2.md](QA-V1.2.md).
+V1.2: **17 E2E PASS + 22 UAT PASS = 39 PASS / 0 FAIL**, sobre la aplicación publicada, con Firestore real, escritorio y circuito móvil 390 × 844. Las cuatro mejoras UX y la limpieza se documentan en [QA-V1.2.md](QA-V1.2.md).
 
 V1.1 publicada probada en Chrome con Firestore real: **17 PASS / 0 FAIL** en el flujo E2E de V1. Se verificaron escritorio y vista responsive de 320, 390 y 760 px, sin overflow horizontal. Los cuatro registros QA fueron eliminados al terminar. Detalles, resultados esperados/obtenidos y limitaciones en [QA-V1.1.md](QA-V1.1.md).
 
