@@ -43,7 +43,7 @@ Colecciones: `clientes` (compatible con registros anteriores), `propiedades` y `
 
 ## Verificación
 
-La validación de V1.2.1 se documenta en [QA-V1.2.1.md](QA-V1.2.1.md).
+V1.2.1 publicada: **17 E2E PASS + 22 UAT PASS = 39 PASS / 0 FAIL**, escritorio y móvil 390 × 844, 0 QA restantes y datos reales intactos. Resultados y observaciones en [QA-V1.2.1.md](QA-V1.2.1.md). La aprobación visual final queda pendiente de la revisión del usuario.
 
 V1.2: **17 E2E PASS + 22 UAT PASS = 39 PASS / 0 FAIL**, sobre la aplicación publicada, con Firestore real, escritorio y circuito móvil 390 × 844. Las cuatro mejoras UX y la limpieza se documentan en [QA-V1.2.md](QA-V1.2.md).
 
