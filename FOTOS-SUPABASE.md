@@ -14,7 +14,7 @@ Bucket privado propiedades. Rutas `<UID>/<ID_PROPIEDAD_FIRESTORE>/<UUID_V4>.<jpg
 
 Solo al guardar cambios de fotos se agregan `fotos` (array de id, ruta, mime, bytes, ancho, alto) y `fotoPrincipalId` al documento correspondiente. Firestore no almacena imágenes, tokens o URLs firmadas. Las propiedades anteriores no requieren migración. Las transacciones protegen las referencias frente a ediciones concurrentes.
 
-Las fotos nuevas se suben antes de guardar metadatos. Las retiradas se eliminan después. La cola contiene rutas e IDs; antes de DELETE se consulta Firestore desde servidor y se conserva cualquier archivo aún referenciado. Se verifica ausencia con listado. No hay transacción distribuida: una limpieza interrumpida necesita reingreso, conexión y almacenamiento local conservado. Web Locks coordina pestañas compatibles, no dispositivos.
+Las fotos nuevas se suben antes de guardar metadatos. Las retiradas quedan pendientes de eliminación manual. La cola contiene rutas e IDs; antes de DELETE se consulta Firestore desde servidor y se conserva cualquier archivo aún referenciado. Se verifica ausencia con listado. No hay transacción distribuida: una limpieza interrumpida necesita conexión, sesión válida, almacenamiento local conservado y otra acción manual confirmada. Web Locks coordina pestañas compatibles, no dispositivos.
 
 RLS continúa siendo la seguridad efectiva. Cada usuario opera en su carpeta. Firestore conserva su esquema y reglas actuales; no se afirma aislamiento comercial por agente. URLs firmadas duran cinco minutos; cerrar sesión retira imágenes de la interfaz pero no revoca una URL ya emitida.
 
@@ -26,3 +26,7 @@ No se modificó ninguna política. La arquitectura utiliza las políticas SELECT
 `index-backup-v1.2.1-recovery-certified.html`: HTML publicado 13e6927, cotejado byte por byte con GitHub Pages. Archivo completo del commit publicado en `/workspace/backups/jat-nexo-published-13e6927.tar.gz`, fuera del repositorio.
 
 Resultados actuales y pendientes en QA-FOTOS-SUPABASE.md. Requiere autorización posterior antes de push/publicación.
+
+## Corrección: eliminación exclusivamente manual
+
+Ninguna limpieza se ejecuta al cargar, iniciar sesión, reconectar, navegar, resetear formularios, guardar ni eliminar propiedades. «Quitar» prepara la retirada de referencias al guardar; el archivo permanece en Storage. «Eliminar archivos pendientes…» muestra una confirmación con las rutas y solo procesa ese conjunto confirmado. Verifica UID, ausencia de referencias y eliminación mediante listado. Cancelar no borra. Las cargas interrumpidas y retiradas pendientes requieren ese mismo botón; no hay reintentos automáticos. Recuperación y límite de seis se conservan.

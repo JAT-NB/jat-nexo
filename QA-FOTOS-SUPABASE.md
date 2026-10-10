@@ -21,3 +21,7 @@ No se efectuaron login, upload, DELETE o cambios de contraseña reales. El propi
 0 escrituras Supabase reales, 0 correos enviados y 0 registros QA reales creados en esta preparación. Objetos simulados restantes: 0.
 
 Evidencia fuera del repositorio: `/workspace/v13-final-evidence/photos/results.json`, `/workspace/v13-final-evidence/recovery/results.json`, `crm-preflight.json`, `data-audit.json`, `backup-check.json`. No se incluyen datos personales ni credenciales privadas en el commit.
+
+## Revalidación de eliminación manual
+
+Suite fotos: **24 PASS / 0 FAIL**; recuperación: **24 PASS / 0 FAIL**. Total: **48 PASS / 0 FAIL**, con Supabase simulado. Caso nuevo: un archivo pendiente sobrevive a reset, online, recarga y login; cancelar la confirmación lo conserva, confirmar el botón lo elimina. Las demás pruebas fueron adaptadas para invocar y confirmar limpieza explícita. 0 objetos simulados restantes y 0 escrituras Supabase reales. Revisión estática confirma que el único llamador interno de limpieza es el botón manual y que el HTML no la invoca. Evidencias en `/workspace/v13-manual-cleanup-evidence`. Los 17 E2E/22 UAT y Storage real siguen pendientes por los límites documentados; no se da por certificada su repetición. No se cambiaron certificados, políticas, usuarios ni datos reales.

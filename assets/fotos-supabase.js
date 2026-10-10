@@ -50,11 +50,14 @@ async function remove(path){
 function withWriteLock(fn){return navigator.locks?navigator.locks.request('jat-nexo-photo-write',fn):fn();}
 async function reconcile(){
  if(!session||!readProperty)return 0;
- if(cleanupFlight){await cleanupFlight;return reconcile();}
+ if(cleanupFlight){await cleanupFlight;return journal().filter(e=>ownPath(e.ruta)).length;}
  if(working)return journal().filter(e=>ownPath(e.ruta)).length;
+ const entries=journal().filter(e=>ownPath(e.ruta));
+ if(!entries.length)return 0;
+ if(!confirm('¿Eliminar los archivos pendientes de limpieza de tu cuenta? Solo se borrarán los que ya no estén referenciados por una propiedad. Esta acción no se puede deshacer.\n'+entries.map(e=>e.ruta).join('\n')))return entries.length;
  cleanupFlight=(async()=>{
   let pending=0;
-  await withWriteLock(async()=>{for(const e of journal().filter(e=>ownPath(e.ruta))){
+  await withWriteLock(async()=>{for(const e of entries){
    if(draft?.items.some(x=>x.ruta===e.ruta)){pending++;continue;}
    try{const p=await readProperty(e.pid);if(p?.fotos?.some(x=>x.ruta===e.ruta)){unqueue(e.ruta);continue;}await remove(e.ruta);unqueue(e.ruta);}catch{pending++;}
   }});
@@ -83,7 +86,7 @@ async function hydrate(){
   try{const src=await signed(path);if(!node.isConnected||!ownPath(path))continue;const img=new Image();img.alt=node.dataset.photoAlt||'Fotografía de la propiedad';img.loading='lazy';img.src=src;img.onload=()=>{node.querySelector('.photo-placeholder')?.setAttribute('hidden','');};img.onerror=()=>{node.querySelector('.photo-placeholder')?.removeAttribute('hidden');img.remove();node.dataset.loaded='failed';urls.delete(path);};node.append(img);node.dataset.loaded='yes';}catch{node.dataset.loaded='failed';node.querySelector('.photo-placeholder')?.replaceChildren(document.createTextNode('Fotografía no disponible. Reintentá al ingresar.'));}
  }
 }
-function reset(){if(draft)draft.items.forEach(x=>{if(x.preview)URL.revokeObjectURL(x.preview);});draft=null;reconcile().catch(()=>{});}
+function reset(){if(draft)draft.items.forEach(x=>{if(x.preview)URL.revokeObjectURL(x.preview);});draft=null;}
 function editor(p,key){
  if(draft?.key!==key){reset();draft={key,original:{...p,id:p.id||''},items:photos(p).map(x=>({...x})),cover:p.fotoPrincipalId||photos(p)[0]?.id||'',changed:false};}
  return `<section id="photoEditor" class="photo-editor" aria-label="Fotografías"><h3>Fotografías de la propiedad</h3><p class="muted">Hasta 6 fotos (1 portada y 5 adicionales) · JPG, PNG o WebP · máximo 5 MB por foto. Los cambios se aplican al guardar la propiedad.</p><div data-photo-session></div><label class="photo-picker" for="photoFiles">Agregar fotografías desde PC o celular<input id="photoFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple></label><div id="photoFeedback" role="status" aria-live="polite"></div><div id="photoDraft" class="photo-grid"></div></section>`;
@@ -92,7 +95,7 @@ function paintEditor(){
  const box=document.getElementById('photoDraft');if(!box||!draft)return;
  box.innerHTML=draft.items.map((x,i)=>`<article class="photo-item"><div class="photo-thumb" ${x.ruta?`data-photo-path="${esc(x.ruta)}"`:''}>${x.preview?`<img src="${esc(x.preview)}" alt="Vista previa de la foto ${i+1}">`:'<span class="photo-placeholder">Ingresá para ver la fotografía</span>'}</div><p>${i+1} · ${x.id===draft.cover?'Portada':'Fotografía'}</p><div class="photo-controls"><button type="button" data-photo="cover" data-index="${i}" aria-pressed="${x.id===draft.cover}">Portada</button><button type="button" data-photo="up" data-index="${i}" aria-label="Mover foto ${i+1} antes" ${i===0?'disabled':''}>↑</button><button type="button" data-photo="down" data-index="${i}" aria-label="Mover foto ${i+1} después" ${i===draft.items.length-1?'disabled':''}>↓</button><button type="button" data-photo="remove" data-index="${i}" aria-label="Quitar foto ${i+1}">Quitar</button></div></article>`).join('');hydrate();
 }
-function paintSession(){document.querySelectorAll('[data-photo-session]').forEach(n=>{n.innerHTML=session?`<p class="photo-account">Fotos privadas · ${esc(session.user.email)} <button type="button" data-photo="logout">Cerrar sesión</button></p>`:'<p class="photo-account">Para cargar y ver fotos privadas <button type="button" data-photo="login">Ingresar como agente</button></p>';});}
+function paintSession(){document.querySelectorAll('[data-photo-session]').forEach(n=>{n.innerHTML=session?`<p class="photo-account">Fotos privadas · ${esc(session.user.email)} <button type="button" data-photo="logout">Cerrar sesión</button> <button type="button" data-photo="cleanup">Eliminar archivos pendientes…</button></p>`:'<p class="photo-account">Para cargar y ver fotos privadas <button type="button" data-photo="login">Ingresar como agente</button></p>';});}
 function feedback(message){const n=document.getElementById('photoFeedback');if(n)n.textContent=message;}
 async function add(files){
  if(working)return;working=true;
@@ -134,7 +137,7 @@ function dialog(){
  d.querySelector('#photoRecover').onclick=()=>{d.close();d.remove();window.JatRecuperacion?.solicitar();};
  d.querySelector('form').onsubmit=async e=>{
   e.preventDefault();const buttons=d.querySelectorAll('button');buttons.forEach(b=>b.disabled=true);
-  try{await accept(await request('/auth/v1/token?grant_type=password',{method:'POST',body:{email:d.querySelector('#photoEmail').value.trim(),password:d.querySelector('#photoPassword').value}}));d.querySelector('#photoPassword').value='';d.close();await reconcile();paintSession();paintEditor();}
+  try{await accept(await request('/auth/v1/token?grant_type=password',{method:'POST',body:{email:d.querySelector('#photoEmail').value.trim(),password:d.querySelector('#photoPassword').value}}));d.querySelector('#photoPassword').value='';d.close();paintSession();paintEditor();}
   catch(e){d.querySelector('#photoAuthMessage').textContent=e.message;}finally{buttons.forEach(b=>b.disabled=false);}
  };
 }
@@ -146,6 +149,7 @@ async function init(onchange,reader){
   const b=e.target.closest('[data-photo]');if(!b||b.disabled||working)return;
   const action=b.dataset.photo;try{
    if(action==='login')return dialog();
+   if(action==='cleanup'){const pending=await reconcile();paintSession();alert(pending?'Quedan archivos pendientes; no se borraron o no se pudo confirmar su eliminación.':'Limpieza finalizada. No quedan archivos pendientes de tu cuenta.');return;}
    if(action==='logout'){if(draft?.changed)throw new Error('Guardá o cancelá los cambios de fotos antes de cerrar sesión.');await request('/auth/v1/logout?scope=local',{method:'POST',token:await token()});clear();return;}
    if(action==='view'){const main=document.querySelector('.photo-main');main.innerHTML='<span class="photo-placeholder">Cargando fotografía…</span>';main.dataset.photoPath=b.dataset.path;delete main.dataset.loaded;hydrate();return;}
    if(!draft)return;await token();assertOwner(draft.original);const i=Number(b.dataset.index),x=draft.items[i];if(!x)return;
@@ -160,8 +164,8 @@ async function init(onchange,reader){
  new MutationObserver(()=>{paintSessionIfEmpty();hydrate();}).observe(document.getElementById('pantalla'),{subtree:true,childList:true});
  function paintSessionIfEmpty(){if(document.querySelector('[data-photo-session]:empty'))paintSession();}
  try{const saved=JSON.parse(sessionStorage.getItem(SESSION)||'null');if(saved){session=saved;await token();await accept({...session,expires_in:Math.max(0,session.expires_at-Date.now()/1000)});}}catch{clear();}
- paintSession();paintEditor();await reconcile();
+ paintSession();paintEditor();
  setInterval(()=>{urls.clear();document.querySelectorAll('[data-photo-path]').forEach(n=>{n.querySelector('img')?.remove();n.querySelector('.photo-placeholder')?.removeAttribute('hidden');delete n.dataset.loaded;});hydrate();},240000);
- window.addEventListener('online',()=>reconcile().catch(()=>{}));
+ // Reconnection never starts deletion. Cleanup requires the explicit button.
 }
 export const Fotos={withWriteLock,assertUnchanged,init,editor,paintEditor,paintSession,cover,gallery,prepare,reset,reconcile,assertOwner,queue,busy};
