@@ -1,0 +1,19 @@
+{
+  "id": "/jat-nexo/preview-v14/",
+  "name": "JAT Nexo",
+  "short_name": "JAT Nexo",
+  "description": "Tu asistente inmobiliario",
+  "start_url": "/jat-nexo/preview-v14/",
+  "scope": "/jat-nexo/preview-v14/",
+  "display": "standalone",
+  "background_color": "#f3f5f3",
+  "theme_color": "#102a39",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
